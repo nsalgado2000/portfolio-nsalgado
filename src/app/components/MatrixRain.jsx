@@ -15,6 +15,8 @@ const MatrixRain = () => {
     };
     
     resizeCanvas();
+    ctx.fillStyle = '#2E3440';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     window.addEventListener('resize', resizeCanvas);
 
     const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
@@ -82,6 +84,7 @@ const MatrixRain = () => {
       });
     }
 
+    draw();
     const interval = setInterval(draw, 50);
 
     return () => {
@@ -93,7 +96,7 @@ const MatrixRain = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10"
+      className="fixed top-0 left-0 w-full h-full -z-10 bg-[#2E3440]"
     />
   );
 };
