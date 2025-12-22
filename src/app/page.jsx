@@ -7,7 +7,7 @@ import MatrixRain from './components/MatrixRain';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#2E3440]">
+    <main className="min-h-screen">
       <MatrixRain />
       <Hero />
       <TechStack />
