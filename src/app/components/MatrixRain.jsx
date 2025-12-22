@@ -9,7 +9,6 @@ const MatrixRain = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    // Set canvas size to window size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -18,42 +17,72 @@ const MatrixRain = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Matrix characters
-    const chars = '0123456789ABCDEF'.split('');
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    
-    // Array for drops - one per column
-    const drops = Array(Math.floor(columns)).fill(1);
+    const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+    const particles = [];
 
-    // Drawing the characters
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 0.6 + 0.3;
+        this.speedX = (Math.random() - 0.5) * 2.5;
+        this.speedY = (Math.random() - 0.5) * 2.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+        this.color = Math.random() > 0.5 ? '#88C0D0' : '#81A1C1';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
     function draw() {
-      // Black BG with opacity for fade effect
-      ctx.fillStyle = 'rgba(46, 52, 64, 0.05)';
+      ctx.fillStyle = 'rgba(46, 52, 64, 0.02)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = '#00FF41'; // Neon matrix green
-      ctx.font = `${fontSize}px monospace`;
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw();
+      });
 
-      // Loop over drops
-      drops.forEach((y, i) => {
-        // Random character
-        const char = chars[Math.floor(Math.random() * chars.length)];
-        
-        // Draw character
-        ctx.fillText(char, i * fontSize, y * fontSize);
+      particles.forEach((particle, i) => {
+        particles.slice(i + 1).forEach(otherParticle => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Reset drop to top with random delay if it's at the bottom
-        if (y * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        
-        // Move drop
-        drops[i]++;
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = particle.color;
+            ctx.globalAlpha = (1 - distance / 120) * 0.15;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+        });
       });
     }
 
-    const interval = setInterval(draw, 33);
+    const interval = setInterval(draw, 50);
 
     return () => {
       clearInterval(interval);
