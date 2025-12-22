@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 export default function Projects() {
     return (
-        <section id="projetos" className="container mx-auto px-4 py-20">
+        <section id="projects" className="container mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold text-center mb-12 text-[#ECEFF4]">
-          Projetos em Destaque
+          Featured Projects
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((project) => (
@@ -14,15 +14,15 @@ export default function Projects() {
             >
               <div className="aspect-video bg-[#4C566A]"></div>
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-[#ECEFF4]">Projeto {project}</h3>
+                <h3 className="text-xl font-bold mb-2 text-[#ECEFF4]">Project {project}</h3>
                 <p className="text-[#D8DEE9]/80 mb-4">
-                  Descrição breve do projeto e tecnologias utilizadas.
+                  Brief description of the project and technologies used.
                 </p>
                 <Link 
                   href="#"
                   className="text-[#88C0D0] hover:text-[#81A1C1] font-medium inline-flex items-center"
                 >
-                  Ver mais <span className="ml-1">→</span>
+                  View more <span className="ml-1">→</span>
                 </Link>
               </div>
             </div>
