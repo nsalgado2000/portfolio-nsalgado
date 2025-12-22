@@ -4,12 +4,23 @@ export default function Hero() {
   return (
     <section className="container mx-auto px-4 py-20 flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#4C566A]/20 to-transparent">
       <div className="text-center space-y-8 animate-fadeIn">
-        <div className="relative">
-        <h1 className="font-poppins text-7xl md:text-8xl font-bold bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] text-transparent bg-clip-text animate-gradient py-3">
-          NSalgado
-        </h1>
-        <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
-      </div>
+        <div className="relative overflow-visible">
+          <h1 className="font-poppins text-7xl md:text-8xl font-bold py-3 leading-tight overflow-visible">
+            <span 
+              className="inline-block bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-2"
+              style={{ 
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                color: 'transparent',
+                lineHeight: '1.1'
+              }}
+            >
+              NSalgado
+            </span>
+          </h1>
+          <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
+        </div>
       <p className="text-2xl md:text-3xl text-[#ECEFF4]/80 font-light">
         Frontend Developer
       </p>
