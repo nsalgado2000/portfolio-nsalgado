@@ -11,16 +11,17 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Project 2',
-    description: 'Brief description of the project and technologies used.',
+    title: 'Condway/Autosíndico',
+    description: 'Condominium management system focused on administrative solutions, performance analysis, and financial control. Features messaging system, alerts, and shared space allocation for residents. Full frontend development and partial API implementation.',
     link: '#',
+    image: '/project-2.png',
   },
-  {
-    id: 3,
-    title: 'Project 3',
-    description: 'Brief description of the project and technologies used.',
-    link: '#',
-  },
+  // {
+  //   id: 3,
+  //   title: 'Project 3',
+  //   description: 'Brief description of the project and technologies used.',
+  //   link: '#',
+  // },
 ];
 
 export default function Projects() {
@@ -29,7 +30,7 @@ export default function Projects() {
         <h2 className="text-3xl font-bold text-center mb-12 text-[#ECEFF4]">
           Featured Projects
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project) => (
             <Link
               key={project.id}
