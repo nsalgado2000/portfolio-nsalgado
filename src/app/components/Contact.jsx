@@ -16,6 +16,12 @@ const icons = {
   ),
 };
 
+const links = {
+  GitHub: 'https://github.com/nsalgado2000',
+  LinkedIn: 'https://www.linkedin.com/in/nicolas-salgado-925635306/',
+  Email: 'mailto:2000nsalgado@gmail.com',
+};
+
 export default function Contact() {
     return (
       <section id="contact" className="bg-[#3B4252] py-20">
@@ -28,7 +34,9 @@ export default function Contact() {
           {['GitHub', 'LinkedIn', 'Email'].map((platform) => (
             <a 
               key={platform}
-              href="#"
+              href={links[platform]}
+              target={platform === 'Email' ? '_self' : '_blank'}
+              rel={platform === 'Email' ? '' : 'noopener noreferrer'}
               className="px-6 py-3 rounded-lg bg-[#2E3440] text-[#D8DEE9] hover:text-[#88C0D0] transition-colors border border-[#4C566A] hover:border-[#88C0D0] inline-flex items-center gap-2"
             >
               {icons[platform]}
