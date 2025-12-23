@@ -138,7 +138,7 @@ export default function Hero() {
             }
           `}</style>
           <p className="text-3xl md:text-4xl text-[#ECEFF4]/80 font-light">
-            Expert Fullstack Developer
+          Experienced Fullstack Developer
           </p>
           <p className="max-w-2xl mx-auto text-xl text-[#D8DEE9]/60 leading-relaxed">
             Specialized in Java with Spring Boot, React, Next.js, and FastAPI. Building scalable, high-performance applications with clean code and modern architecture.
