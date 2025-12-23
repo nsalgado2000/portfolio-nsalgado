@@ -21,9 +21,9 @@ export default function Education() {
                     <Image
                       src="/ufjf-logo.png"
                       alt="UFJF Logo"
-                      width={96}
-                      height={96}
-                      className="object-contain p-2"
+                      width={150}
+                      height={150}
+                      className="object-contain"
                       onError={() => setImageError(true)}
                     />
                   ) : (
