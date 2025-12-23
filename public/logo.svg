@@ -1,0 +1,6 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
+  <rect width="512" height="512" rx="96" fill="#2E3440"/>
+  <rect x="40" y="40" width="432" height="432" rx="72" fill="#3B4252" stroke="#4C566A" stroke-width="12"/>
+  <text x="140" y="320" fill="#88C0D0" font-family="monospace" font-size="220" font-weight="700">&gt;_</text>
+</svg>
+

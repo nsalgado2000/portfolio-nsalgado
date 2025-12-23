@@ -1,8 +1,53 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
+  const [displayName, setDisplayName] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    const frames = [
+      { text: '', delay: 260 },
+      { text: 'N', delay: 200 },
+      { text: 'Ni', delay: 200 },
+      { text: 'Nic', delay: 200 },
+      { text: 'Nico', delay: 200 },
+      { text: 'Nicol', delay: 200 },
+      { text: 'Nicola', delay: 200 },
+      { text: 'Nicolas', delay: 240 },
+      { text: 'Nicolas ', delay: 260 },
+      { text: 'Nicolas S', delay: 220 },
+      { text: 'Nicolas Sa', delay: 220 },
+      { text: 'Nicolas Sak', delay: 520 },
+      { text: 'Nicolas Sa', delay: 420 },
+      { text: 'Nicolas Sal', delay: 240 },
+      { text: 'Nicolas Salg', delay: 240 },
+      { text: 'Nicolas Salga', delay: 240 },
+      { text: 'Nicolas Salgad', delay: 240 },
+      { text: 'Nicolas Salgado', delay: 0 }
+    ];
+
+    let timer;
+    let idx = 0;
+    const run = () => {
+      setDisplayName(frames[idx].text);
+      if (idx < frames.length - 1) {
+        timer = setTimeout(run, frames[idx].delay || 240);
+      }
+      idx += 1;
+    };
+    timer = setTimeout(run, frames[0].delay || 240);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const blink = setInterval(() => setShowCursor((v) => !v), 620);
+    return () => clearInterval(blink);
+  }, []);
+
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
     const element = document.querySelector(targetId);
@@ -28,7 +73,14 @@ export default function Hero() {
                   lineHeight: '1.1'
                 }}
               >
-                Nicolas Salgado
+                {displayName || 'Nicolas Salgado'}
+                <span
+                  className="inline-block w-4 ml-1 align-middle"
+                  aria-hidden="true"
+                  style={{ opacity: showCursor ? 1 : 0 }}
+                >
+                  |
+                </span>
               </span>
             </h1>
             <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>

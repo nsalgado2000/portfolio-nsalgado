@@ -1,6 +1,16 @@
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
 
+export const metadata = {
+  title: 'Nicolas Salgado | Portfolio',
+  description: 'Portfolio of Nicolas Salgado',
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg'
+  }
+}
+
 // Initialize fonts
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({ 
