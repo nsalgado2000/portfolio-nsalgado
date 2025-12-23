@@ -13,7 +13,7 @@ const projects = [
     id: 2,
     title: 'Condway/Autosíndico',
     description: 'Condominium management system focused on administrative solutions, performance analysis, and financial control. Features messaging system, alerts, and shared space allocation for residents. Full frontend development and partial API implementation.',
-    link: '#',
+    link: 'https://www.condway.io',
     image: '/project-2.png',
   },
   // {
