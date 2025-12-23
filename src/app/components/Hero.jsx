@@ -73,6 +73,7 @@ export default function Hero() {
                   lineHeight: '1.1'
                 }}
               >
+                <span className="mr-4 text-[#88C0D0]">&gt;_</span>
                 {displayName || 'Nicolas Salgado'}
                 <span
                   className="inline-block w-4 ml-1 align-middle"
