@@ -1,44 +1,53 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 export default function Hero() {
   const [displayName, setDisplayName] = useState('');
   const [showCursor, setShowCursor] = useState(true);
+  const [prevName, setPrevName] = useState('');
+  const currentNameRef = useRef('');
 
   useEffect(() => {
     const frames = [
-      { text: '', delay: 260 },
-      { text: 'N', delay: 200 },
-      { text: 'Ni', delay: 200 },
-      { text: 'Nic', delay: 200 },
-      { text: 'Nico', delay: 200 },
-      { text: 'Nicol', delay: 200 },
-      { text: 'Nicola', delay: 200 },
-      { text: 'Nicolas', delay: 240 },
-      { text: 'Nicolas ', delay: 260 },
-      { text: 'Nicolas S', delay: 220 },
-      { text: 'Nicolas Sa', delay: 220 },
-      { text: 'Nicolas Sak', delay: 520 },
-      { text: 'Nicolas Sa', delay: 420 },
-      { text: 'Nicolas Sal', delay: 240 },
-      { text: 'Nicolas Salg', delay: 240 },
-      { text: 'Nicolas Salga', delay: 240 },
-      { text: 'Nicolas Salgad', delay: 240 },
-      { text: 'Nicolas Salgado', delay: 0 }
+      { text: '', delay: 220, jitter: 40 },
+      { text: 'N', delay: 180, jitter: 40 },
+      { text: 'Ni', delay: 180, jitter: 40 },
+      { text: 'Nic', delay: 180, jitter: 40 },
+      { text: 'Nico', delay: 190, jitter: 50 },
+      { text: 'Nicol', delay: 190, jitter: 50 },
+      { text: 'Nicola', delay: 190, jitter: 50 },
+      { text: 'Nicolas', delay: 210, jitter: 50 },
+      { text: 'Nicolas ', delay: 240, jitter: 60 },
+      { text: 'Nicolas S', delay: 200, jitter: 50 },
+      { text: 'Nicolas Sa', delay: 200, jitter: 50 },
+      { text: 'Nicolas Sak', delay: 640, jitter: 120 },
+      { text: 'Nicolas Sa', delay: 520, jitter: 90 },
+      { text: 'Nicolas Sal', delay: 220, jitter: 60 },
+      { text: 'Nicolas Salg', delay: 220, jitter: 60 },
+      { text: 'Nicolas Salga', delay: 220, jitter: 60 },
+      { text: 'Nicolas Salgad', delay: 220, jitter: 60 },
+      { text: 'Nicolas Salgado', delay: 0, jitter: 0 }
     ];
 
     let timer;
     let idx = 0;
     const run = () => {
-      setDisplayName(frames[idx].text);
+      const frame = frames[idx];
+      setPrevName(currentNameRef.current);
+      setDisplayName(frame.text);
+      currentNameRef.current = frame.text;
       if (idx < frames.length - 1) {
-        timer = setTimeout(run, frames[idx].delay || 240);
+        const base = frame.delay || 200;
+        const jitter = frame.jitter || 0;
+        const variance = Math.round((Math.random() * 2 - 1) * jitter);
+        const nextDelay = Math.max(90, base + variance);
+        timer = setTimeout(run, nextDelay);
       }
       idx += 1;
     };
-    timer = setTimeout(run, frames[0].delay || 240);
+    run();
 
     return () => clearTimeout(timer);
   }, []);
@@ -47,6 +56,26 @@ export default function Hero() {
     const blink = setInterval(() => setShowCursor((v) => !v), 620);
     return () => clearInterval(blink);
   }, []);
+
+  const parts = useMemo(() => {
+    const current = displayName || '';
+    const previous = prevName || '';
+    const minLen = Math.min(current.length, previous.length);
+    let diffIndex = 0;
+    while (diffIndex < minLen && current[diffIndex] === previous[diffIndex]) {
+      diffIndex += 1;
+    }
+
+    if (diffIndex >= current.length) {
+      return { stable: current, active: '', tail: '' };
+    }
+
+    return {
+      stable: current.slice(0, diffIndex),
+      active: current[diffIndex] ?? '',
+      tail: current.slice(diffIndex + 1)
+    };
+  }, [displayName, prevName]);
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
@@ -74,7 +103,17 @@ export default function Hero() {
                 }}
               >
                 <span className="mr-4 text-[#88C0D0]">&gt;_</span>
-                {displayName || 'Nicolas Salgado'}
+                <span>{parts.stable}</span>
+                {parts.active && (
+                  <span
+                    key={`${parts.stable}-${parts.active}-${parts.tail}`}
+                    className="inline-block"
+                    style={{ animation: 'nameReveal 260ms ease-out' }}
+                  >
+                    {parts.active}
+                  </span>
+                )}
+                <span>{parts.tail}</span>
                 <span
                   className="inline-block w-4 ml-1 align-middle"
                   aria-hidden="true"
@@ -86,6 +125,18 @@ export default function Hero() {
             </h1>
             <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
           </div>
+          <style jsx>{`
+            @keyframes nameReveal {
+              from {
+                transform: translateY(10px);
+                opacity: 0;
+              }
+              to {
+                transform: translateY(0);
+                opacity: 1;
+              }
+            }
+          `}</style>
           <p className="text-3xl md:text-4xl text-[#ECEFF4]/80 font-light">
             Expert Fullstack Developer
           </p>
