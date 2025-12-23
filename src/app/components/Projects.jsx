@@ -31,9 +31,12 @@ export default function Projects() {
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
-            <div 
+            <Link
               key={project.id}
-              className="bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0]"
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0] block cursor-pointer"
             >
               {project.image ? (
                 <div className="aspect-video relative overflow-hidden">
@@ -52,16 +55,11 @@ export default function Projects() {
                 <p className="text-[#D8DEE9]/80 mb-4">
                   {project.description}
                 </p>
-                <Link 
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#88C0D0] hover:text-[#81A1C1] font-medium inline-flex items-center"
-                >
+                <span className="text-[#88C0D0] hover:text-[#81A1C1] font-medium inline-flex items-center">
                   View more <span className="ml-1">→</span>
-                </Link>
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

@@ -3,7 +3,7 @@ export default function TechStack() {
   <section className="bg-[#3B4252] py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-[#ECEFF4]">
-            Technologies I Use
+            Technologies I Work With
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             {['Java', 'Spring Boot', 'React', 'Next.js', 'FastAPI', 'TypeScript', 'Python', 'JavaScript'].map((tech) => (
