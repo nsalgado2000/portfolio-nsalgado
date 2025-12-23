@@ -20,7 +20,7 @@ const MatrixRain = () => {
     window.addEventListener('resize', resizeCanvas);
 
     const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
-    const particles = [];
+    let particles = [];
 
     class Particle {
       constructor() {
@@ -51,9 +51,14 @@ const MatrixRain = () => {
       }
     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
+    function initializeParticles() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
     }
+
+    initializeParticles();
 
     function draw() {
       ctx.fillStyle = 'rgba(46, 52, 64, 0.02)';
@@ -86,9 +91,15 @@ const MatrixRain = () => {
 
     draw();
     const interval = setInterval(draw, 50);
+    const resetInterval = setInterval(() => {
+      ctx.fillStyle = '#2E3440';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      initializeParticles();
+    }, 30000);
 
     return () => {
       clearInterval(interval);
+      clearInterval(resetInterval);
       window.removeEventListener('resize', resizeCanvas);
     };
   }, []);
