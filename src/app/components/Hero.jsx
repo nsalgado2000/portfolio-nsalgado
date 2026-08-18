@@ -164,20 +164,31 @@ export default function Hero() {
                   >
                     &gt;_
                   </span>
-                  <span>{parts.stable}</span>
-                  {parts.active && (
+                  <span className="relative inline-block">
                     <span
-                      key={`${parts.stable}-${parts.active}-${parts.tail}`}
-                      className="inline-block"
+                      aria-hidden="true"
+                      className="absolute -inset-x-6 -inset-y-3 sm:-inset-x-8 sm:-inset-y-4 blur-3xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 rounded-full pointer-events-none"
                       style={{
-                        animation: 'nameReveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both',
-                        willChange: 'transform, opacity, filter'
+                        zIndex: -1,
+                        opacity: isError ? 0 : 1,
+                        transition: 'opacity 220ms ease'
                       }}
-                    >
-                      {parts.active}
-                    </span>
-                  )}
-                  <span>{parts.tail}</span>
+                    ></span>
+                    <span>{parts.stable}</span>
+                    {parts.active && (
+                      <span
+                        key={`${parts.stable}-${parts.active}-${parts.tail}`}
+                        className="inline-block"
+                        style={{
+                          animation: 'nameReveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both',
+                          willChange: 'transform, opacity, filter'
+                        }}
+                      >
+                        {parts.active}
+                      </span>
+                    )}
+                    <span>{parts.tail}</span>
+                  </span>
                   {vanishing && isVanishingAnimating && (
                     <span
                       key={`vanish-${vanishing}`}
@@ -212,7 +223,6 @@ export default function Hero() {
                 </span>
               </span>
             </h1>
-            <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
           </div>
           <style jsx>{`
             @keyframes nameReveal {
