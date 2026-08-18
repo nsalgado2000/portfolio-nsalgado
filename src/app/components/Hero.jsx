@@ -24,8 +24,8 @@ export default function Hero() {
       { text: 'Nicolas ', delay: 240, jitter: 60 },
       { text: 'Nicolas S', delay: 200, jitter: 50 },
       { text: 'Nicolas Sa', delay: 200, jitter: 50 },
-      { text: 'Nicolas Sak', delay: 640, jitter: 120 },
-      { text: 'Nicolas Sa', delay: 520, jitter: 90 },
+      { text: 'Nicolas Sak', delay: 760, jitter: 140 },
+      { text: 'Nicolas Sa', delay: 1000, jitter: 100 },
       { text: 'Nicolas Sal', delay: 220, jitter: 60 },
       { text: 'Nicolas Salg', delay: 220, jitter: 60 },
       { text: 'Nicolas Salga', delay: 220, jitter: 60 },
@@ -59,11 +59,30 @@ export default function Hero() {
     return () => clearInterval(blink);
   }, []);
 
+  const [isVanishingAnimating, setIsVanishingAnimating] = useState(false);
+
   const ghost = useMemo(() => {
     if (!displayName) return FULL_NAME;
     if (displayName === FULL_NAME) return '';
     return FULL_NAME.startsWith(displayName) ? FULL_NAME.slice(displayName.length) : '';
   }, [displayName]);
+
+  const vanishing = useMemo(() => {
+    if (prevName.length > displayName.length && prevName.startsWith(displayName)) {
+      return prevName.slice(displayName.length);
+    }
+    return '';
+  }, [displayName, prevName]);
+
+  useEffect(() => {
+    if (!vanishing) {
+      setIsVanishingAnimating(false);
+      return;
+    }
+    setIsVanishingAnimating(true);
+    const t = setTimeout(() => setIsVanishingAnimating(false), 120);
+    return () => clearTimeout(t);
+  }, [vanishing]);
 
   const isError = displayName.length > 0 && !FULL_NAME.startsWith(displayName);
 
@@ -150,12 +169,28 @@ export default function Hero() {
                     <span
                       key={`${parts.stable}-${parts.active}-${parts.tail}`}
                       className="inline-block"
-                      style={{ animation: 'nameReveal 260ms ease-out' }}
+                      style={{
+                        animation: 'nameReveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both',
+                        willChange: 'transform, opacity, filter'
+                      }}
                     >
                       {parts.active}
                     </span>
                   )}
                   <span>{parts.tail}</span>
+                  {vanishing && isVanishingAnimating && (
+                    <span
+                      key={`vanish-${vanishing}`}
+                      aria-hidden="true"
+                      className="inline-block"
+                      style={{
+                        animation: 'nameHide 120ms cubic-bezier(0.55, 0, 0.85, 0.3) both',
+                        willChange: 'transform, opacity, filter'
+                      }}
+                    >
+                      {vanishing}
+                    </span>
+                  )}
                   <span
                     className="inline-block ml-0.5 sm:ml-1 align-middle"
                     aria-hidden="true"
@@ -163,7 +198,7 @@ export default function Hero() {
                   >
                     |
                   </span>
-                  {ghost && (
+                  {ghost && !isVanishingAnimating && (
                     <span
                       aria-hidden="true"
                       style={{
@@ -182,12 +217,29 @@ export default function Hero() {
           <style jsx>{`
             @keyframes nameReveal {
               from {
-                transform: translateY(10px);
+                transform: translate3d(-0.12em, 0.18em, 0) scale(0.9);
                 opacity: 0;
+                filter: blur(6px);
+              }
+              60% {
+                filter: blur(1px);
               }
               to {
-                transform: translateY(0);
+                transform: translate3d(0, 0, 0) scale(1);
                 opacity: 1;
+                filter: blur(0);
+              }
+            }
+            @keyframes nameHide {
+              from {
+                transform: translate3d(0, 0, 0) scale(1);
+                opacity: 1;
+                filter: blur(0);
+              }
+              to {
+                transform: translate3d(0, -0.08em, 0) scale(0.7);
+                opacity: 0;
+                filter: blur(5px);
               }
             }
           `}</style>
