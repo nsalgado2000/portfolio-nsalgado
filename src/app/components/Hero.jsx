@@ -65,6 +65,8 @@ export default function Hero() {
     return FULL_NAME.startsWith(displayName) ? FULL_NAME.slice(displayName.length) : '';
   }, [displayName]);
 
+  const isError = displayName.length > 0 && !FULL_NAME.startsWith(displayName);
+
   const parts = useMemo(() => {
     const current = displayName || '';
     const previous = prevName || '';
@@ -132,11 +134,17 @@ export default function Hero() {
                     gridRow: 1,
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    color: 'transparent'
+                    WebkitTextFillColor: isError ? '#BF616A' : 'transparent',
+                    color: isError ? '#BF616A' : 'transparent',
+                    transition: 'color 160ms ease, -webkit-text-fill-color 160ms ease'
                   }}
                 >
-                  <span className="mr-2 sm:mr-3 md:mr-4 text-[#88C0D0]">&gt;_</span>
+                  <span
+                    className="mr-2 sm:mr-3 md:mr-4"
+                    style={{ WebkitTextFillColor: '#88C0D0', color: '#88C0D0' }}
+                  >
+                    &gt;_
+                  </span>
                   <span>{parts.stable}</span>
                   {parts.active && (
                     <span
