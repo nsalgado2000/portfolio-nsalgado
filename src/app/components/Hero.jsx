@@ -125,7 +125,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[#2E3440]/40 backdrop-blur-sm rounded-lg -z-10"></div>
         <div className="text-center space-y-4 sm:space-y-6 md:space-y-8 animate-fadeIn p-4 sm:p-6 md:p-8 lg:p-12">
           <div className="relative overflow-visible -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
-            <h1 className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+            <h1
+              className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible"
+              style={{ fontSize: 'clamp(1.5rem, 8vw, 8rem)' }}
+            >
               <span
                 className="inline-grid whitespace-nowrap"
                 style={{ lineHeight: '1.1' }}
