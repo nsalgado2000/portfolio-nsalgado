@@ -127,7 +127,7 @@ export default function Hero() {
           <div className="relative overflow-visible -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
             <h1
               className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible"
-              style={{ fontSize: 'clamp(1.75rem, 9cqw, 9rem)' }}
+              style={{ fontSize: 'clamp(1.5rem, 8cqw, 8rem)' }}
             >
               <span
                 className="inline-grid whitespace-nowrap"
@@ -167,7 +167,7 @@ export default function Hero() {
                   <span className="relative inline-block">
                     <span
                       aria-hidden="true"
-                      className="absolute -inset-x-6 -inset-y-3 sm:-inset-x-8 sm:-inset-y-4 blur-3xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 rounded-full pointer-events-none"
+                      className="absolute -inset-x-4 -inset-y-2 sm:-inset-x-6 sm:-inset-y-3 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 rounded-full pointer-events-none"
                       style={{
                         zIndex: -1,
                         opacity: isError ? 0 : 1,
@@ -227,12 +227,9 @@ export default function Hero() {
           <style jsx>{`
             @keyframes nameReveal {
               from {
-                transform: translate3d(-0.12em, 0.18em, 0) scale(0.9);
+                transform: translate3d(-0.1em, 0.15em, 0) scale(0.92);
                 opacity: 0;
-                filter: blur(6px);
-              }
-              60% {
-                filter: blur(1px);
+                filter: blur(3px);
               }
               to {
                 transform: translate3d(0, 0, 0) scale(1);
@@ -249,7 +246,7 @@ export default function Hero() {
               to {
                 transform: translate3d(0, -0.08em, 0) scale(0.7);
                 opacity: 0;
-                filter: blur(5px);
+                filter: blur(3px);
               }
             }
           `}</style>
