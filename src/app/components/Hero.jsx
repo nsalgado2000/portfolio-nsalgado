@@ -79,41 +79,61 @@ export default function Hero() {
               style={{ fontSize: 'clamp(1.5rem, 8vw, 8rem)' }}
             >
               <span
-                className="inline-block bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2 whitespace-nowrap"
-                style={{
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  WebkitTextFillColor: isError ? '#BF616A' : 'transparent',
-                  color: isError ? '#BF616A' : 'transparent',
-                  transition:
-                    'color 160ms ease, -webkit-text-fill-color 160ms ease',
-                  lineHeight: '1.1'
-                }}
+                className="inline-grid whitespace-nowrap"
+                style={{ lineHeight: '1.1' }}
               >
                 <span
-                  className="mr-2 sm:mr-3 md:mr-4"
-                  style={{ WebkitTextFillColor: '#88C0D0', color: '#88C0D0' }}
-                >
-                  &gt;_
-                </span>
-                <span>{displayName}</span>
-                <span
                   aria-hidden="true"
-                  style={{ opacity: showCursor ? 1 : 0 }}
+                  className="pb-1 sm:pb-1.5 md:pb-2"
+                  style={{
+                    gridColumn: 1,
+                    gridRow: 1,
+                    visibility: 'hidden'
+                  }}
                 >
-                  |
+                  <span className="mr-2 sm:mr-3 md:mr-4">&gt;_</span>
+                  {FULL_NAME}
+                  <span>|</span>
                 </span>
-                {ghost && !isError && (
+                <span
+                  className="bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2"
+                  style={{
+                    gridColumn: 1,
+                    gridRow: 1,
+                    textAlign: 'left',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: isError ? '#BF616A' : 'transparent',
+                    color: isError ? '#BF616A' : 'transparent',
+                    transition:
+                      'color 160ms ease, -webkit-text-fill-color 160ms ease'
+                  }}
+                >
+                  <span
+                    className="mr-2 sm:mr-3 md:mr-4"
+                    style={{ WebkitTextFillColor: '#88C0D0', color: '#88C0D0' }}
+                  >
+                    &gt;_
+                  </span>
+                  <span>{displayName}</span>
                   <span
                     aria-hidden="true"
-                    style={{
-                      WebkitTextFillColor: '#6B7383',
-                      color: '#6B7383'
-                    }}
+                    style={{ opacity: showCursor ? 1 : 0 }}
                   >
-                    {ghost}
+                    |
                   </span>
-                )}
+                  {ghost && !isError && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        WebkitTextFillColor: '#6B7383',
+                        color: '#6B7383'
+                      }}
+                    >
+                      {ghost}
+                    </span>
+                  )}
+                </span>
               </span>
             </h1>
             <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
