@@ -87,14 +87,17 @@ export default function Hero() {
 
   return (
     <section className="container mx-auto px-4 py-12 sm:py-16 md:py-20 flex flex-col items-center justify-center min-h-screen">
-      <div className="relative w-full">
+      <div className="relative w-full" style={{ containerType: 'inline-size' }}>
         <div className="absolute inset-0 bg-[#2E3440]/40 backdrop-blur-sm rounded-lg -z-10"></div>
         <div className="text-center space-y-4 sm:space-y-6 md:space-y-8 animate-fadeIn p-4 sm:p-6 md:p-8 lg:p-12">
-          <div className="relative overflow-visible">
-            <h1 className="font-poppins text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible">
-              <span 
-                className="inline-block bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2"
-                style={{ 
+          <div className="relative overflow-visible -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
+            <h1
+              className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible"
+              style={{ fontSize: 'clamp(1.75rem, 9cqw, 9rem)' }}
+            >
+              <span
+                className="inline-block whitespace-nowrap bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2"
+                style={{
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -115,7 +118,7 @@ export default function Hero() {
                 )}
                 <span>{parts.tail}</span>
                 <span
-                  className="inline-block w-2 sm:w-3 md:w-4 ml-0.5 sm:ml-1 align-middle"
+                  className="inline-block ml-0.5 sm:ml-1 align-middle"
                   aria-hidden="true"
                   style={{ opacity: showCursor ? 1 : 0 }}
                 >
