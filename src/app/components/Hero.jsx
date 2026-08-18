@@ -121,14 +121,11 @@ export default function Hero() {
 
   return (
     <section className="container mx-auto px-4 py-12 sm:py-16 md:py-20 flex flex-col items-center justify-center min-h-screen">
-      <div className="relative w-full" style={{ containerType: 'inline-size' }}>
+      <div className="relative w-full">
         <div className="absolute inset-0 bg-[#2E3440]/40 backdrop-blur-sm rounded-lg -z-10"></div>
         <div className="text-center space-y-4 sm:space-y-6 md:space-y-8 animate-fadeIn p-4 sm:p-6 md:p-8 lg:p-12">
           <div className="relative overflow-visible -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
-            <h1
-              className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible"
-              style={{ fontSize: 'clamp(1.5rem, 8cqw, 8rem)' }}
-            >
+            <h1 className="font-poppins font-bold py-2 sm:py-2.5 md:py-3 leading-tight overflow-visible text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
               <span
                 className="inline-grid whitespace-nowrap"
                 style={{ lineHeight: '1.1' }}
@@ -164,7 +161,7 @@ export default function Hero() {
                   >
                     &gt;_
                   </span>
-                  <span className="relative inline-block">
+                  <span className="relative inline-block" style={{ isolation: 'isolate' }}>
                     <span
                       aria-hidden="true"
                       className="absolute -inset-x-4 -inset-y-2 sm:-inset-x-6 sm:-inset-y-3 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 rounded-full pointer-events-none"
