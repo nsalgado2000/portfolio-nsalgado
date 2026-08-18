@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+const FULL_NAME = 'Nicolas Salgado';
+
 export default function Hero() {
   const [displayName, setDisplayName] = useState('');
   const [showCursor, setShowCursor] = useState(true);
@@ -57,6 +59,12 @@ export default function Hero() {
     return () => clearInterval(blink);
   }, []);
 
+  const ghost = useMemo(() => {
+    if (!displayName) return FULL_NAME;
+    if (displayName === FULL_NAME) return '';
+    return FULL_NAME.startsWith(displayName) ? FULL_NAME.slice(displayName.length) : '';
+  }, [displayName]);
+
   const parts = useMemo(() => {
     const current = displayName || '';
     const previous = prevName || '';
@@ -96,33 +104,63 @@ export default function Hero() {
               style={{ fontSize: 'clamp(1.75rem, 9cqw, 9rem)' }}
             >
               <span
-                className="inline-block whitespace-nowrap bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2"
-                style={{
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  color: 'transparent',
-                  lineHeight: '1.1'
-                }}
+                className="inline-grid whitespace-nowrap"
+                style={{ lineHeight: '1.1' }}
               >
-                <span className="mr-2 sm:mr-3 md:mr-4 text-[#88C0D0]">&gt;_</span>
-                <span>{parts.stable}</span>
-                {parts.active && (
-                  <span
-                    key={`${parts.stable}-${parts.active}-${parts.tail}`}
-                    className="inline-block"
-                    style={{ animation: 'nameReveal 260ms ease-out' }}
-                  >
-                    {parts.active}
-                  </span>
-                )}
-                <span>{parts.tail}</span>
                 <span
-                  className="inline-block ml-0.5 sm:ml-1 align-middle"
                   aria-hidden="true"
-                  style={{ opacity: showCursor ? 1 : 0 }}
+                  className="pb-1 sm:pb-1.5 md:pb-2"
+                  style={{
+                    gridColumn: 1,
+                    gridRow: 1,
+                    visibility: 'hidden'
+                  }}
                 >
-                  |
+                  <span className="mr-2 sm:mr-3 md:mr-4">&gt;_</span>
+                  {FULL_NAME}
+                  <span className="inline-block ml-0.5 sm:ml-1 align-middle">|</span>
+                </span>
+                <span
+                  className="bg-gradient-to-r from-[#88C0D0] via-[#81A1C1] to-[#5E81AC] animate-gradient pb-1 sm:pb-1.5 md:pb-2 text-left"
+                  style={{
+                    gridColumn: 1,
+                    gridRow: 1,
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: 'transparent'
+                  }}
+                >
+                  <span className="mr-2 sm:mr-3 md:mr-4 text-[#88C0D0]">&gt;_</span>
+                  <span>{parts.stable}</span>
+                  {parts.active && (
+                    <span
+                      key={`${parts.stable}-${parts.active}-${parts.tail}`}
+                      className="inline-block"
+                      style={{ animation: 'nameReveal 260ms ease-out' }}
+                    >
+                      {parts.active}
+                    </span>
+                  )}
+                  <span>{parts.tail}</span>
+                  <span
+                    className="inline-block ml-0.5 sm:ml-1 align-middle"
+                    aria-hidden="true"
+                    style={{ opacity: showCursor ? 1 : 0 }}
+                  >
+                    |
+                  </span>
+                  {ghost && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        WebkitTextFillColor: '#6B7383',
+                        color: '#6B7383'
+                      }}
+                    >
+                      {ghost}
+                    </span>
+                  )}
                 </span>
               </span>
             </h1>
