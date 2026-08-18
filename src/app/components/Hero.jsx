@@ -1,56 +1,64 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { TypeAnimation } from 'react-type-animation';
+import { useEffect, useMemo, useState } from 'react';
 
 const FULL_NAME = 'Nicolas Salgado';
 
-const SEQUENCE = [
-  500,
-  'Nicolas Sa',
-  300,
-  'Nicolas Sak',
-  760,
-  'Nicolas Sa',
-  1000,
-  'Nicolas Salgado',
-  100000
+const FRAMES = [
+  { text: '', delay: 320 },
+  { text: 'N', delay: 180 },
+  { text: 'Ni', delay: 180 },
+  { text: 'Nic', delay: 180 },
+  { text: 'Nico', delay: 180 },
+  { text: 'Nicol', delay: 180 },
+  { text: 'Nicola', delay: 200 },
+  { text: 'Nicolas', delay: 220 },
+  { text: 'Nicolas ', delay: 240 },
+  { text: 'Nicolas S', delay: 200 },
+  { text: 'Nicolas Sa', delay: 220 },
+  { text: 'Nicolas Sak', delay: 780 },
+  { text: 'Nicolas Sa', delay: 900 },
+  { text: 'Nicolas Sal', delay: 220 },
+  { text: 'Nicolas Salg', delay: 220 },
+  { text: 'Nicolas Salga', delay: 220 },
+  { text: 'Nicolas Salgad', delay: 220 },
+  { text: 'Nicolas Salgado', delay: 0 }
 ];
 
 export default function Hero() {
-  const typeRef = useRef(null);
-  const [typedText, setTypedText] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
-    const el = typeRef.current;
-    if (!el) return;
-    const update = () => {
-      const clone = el.cloneNode(true);
-      clone
-        .querySelectorAll('.custom-type-animation-cursor')
-        .forEach((n) => n.remove());
-      setTypedText(clone.textContent || '');
+    let timer;
+    let idx = 0;
+    const tick = () => {
+      const frame = FRAMES[idx];
+      setDisplayName(frame.text);
+      if (idx < FRAMES.length - 1) {
+        timer = setTimeout(tick, frame.delay);
+      }
+      idx += 1;
     };
-    update();
-    const observer = new MutationObserver(update);
-    observer.observe(el, {
-      childList: true,
-      subtree: true,
-      characterData: true
-    });
-    return () => observer.disconnect();
+    tick();
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const blink = setInterval(() => setShowCursor((v) => !v), 620);
+    return () => clearInterval(blink);
   }, []);
 
   const ghost = useMemo(() => {
-    if (!typedText) return FULL_NAME;
-    if (typedText === FULL_NAME) return '';
-    return FULL_NAME.startsWith(typedText)
-      ? FULL_NAME.slice(typedText.length)
+    if (!displayName) return FULL_NAME;
+    if (displayName === FULL_NAME) return '';
+    return FULL_NAME.startsWith(displayName)
+      ? FULL_NAME.slice(displayName.length)
       : '';
-  }, [typedText]);
+  }, [displayName]);
 
-  const isError = typedText.length > 0 && !FULL_NAME.startsWith(typedText);
+  const isError = displayName.length > 0 && !FULL_NAME.startsWith(displayName);
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
@@ -88,16 +96,14 @@ export default function Hero() {
                 >
                   &gt;_
                 </span>
-                <TypeAnimation
-                  ref={typeRef}
-                  sequence={SEQUENCE}
-                  speed={30}
-                  deletionSpeed={70}
-                  cursor
-                  wrapper="span"
-                  repeat={0}
-                />
-                {ghost && (
+                <span>{displayName}</span>
+                <span
+                  aria-hidden="true"
+                  style={{ opacity: showCursor ? 1 : 0 }}
+                >
+                  |
+                </span>
+                {ghost && !isError && (
                   <span
                     aria-hidden="true"
                     style={{
