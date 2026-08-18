@@ -179,10 +179,7 @@ export default function Hero() {
                       <span
                         key={`${parts.stable}-${parts.active}-${parts.tail}`}
                         className="inline-block"
-                        style={{
-                          animation: 'nameReveal 280ms cubic-bezier(0.16, 1, 0.3, 1) both',
-                          willChange: 'transform, opacity, filter'
-                        }}
+                        style={{ animation: 'nameReveal 260ms ease-out' }}
                       >
                         {parts.active}
                       </span>
@@ -227,14 +224,12 @@ export default function Hero() {
           <style jsx>{`
             @keyframes nameReveal {
               from {
-                transform: translate3d(-0.1em, 0.15em, 0) scale(0.92);
+                transform: translateY(10px);
                 opacity: 0;
-                filter: blur(3px);
               }
               to {
-                transform: translate3d(0, 0, 0) scale(1);
+                transform: translateY(0);
                 opacity: 1;
-                filter: blur(0);
               }
             }
             @keyframes nameHide {
