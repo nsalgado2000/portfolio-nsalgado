@@ -1,7 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+
+const FULL_NAME = 'Nicolas Salgado';
 
 const SEQUENCE = [
   500,
@@ -16,6 +19,39 @@ const SEQUENCE = [
 ];
 
 export default function Hero() {
+  const typeRef = useRef(null);
+  const [typedText, setTypedText] = useState('');
+
+  useEffect(() => {
+    const el = typeRef.current;
+    if (!el) return;
+    const update = () => {
+      const clone = el.cloneNode(true);
+      clone
+        .querySelectorAll('.custom-type-animation-cursor')
+        .forEach((n) => n.remove());
+      setTypedText(clone.textContent || '');
+    };
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(el, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const ghost = useMemo(() => {
+    if (!typedText) return FULL_NAME;
+    if (typedText === FULL_NAME) return '';
+    return FULL_NAME.startsWith(typedText)
+      ? FULL_NAME.slice(typedText.length)
+      : '';
+  }, [typedText]);
+
+  const isError = typedText.length > 0 && !FULL_NAME.startsWith(typedText);
+
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
     const element = document.querySelector(targetId);
@@ -39,8 +75,10 @@ export default function Hero() {
                 style={{
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  color: 'transparent',
+                  WebkitTextFillColor: isError ? '#BF616A' : 'transparent',
+                  color: isError ? '#BF616A' : 'transparent',
+                  transition:
+                    'color 160ms ease, -webkit-text-fill-color 160ms ease',
                   lineHeight: '1.1'
                 }}
               >
@@ -51,13 +89,25 @@ export default function Hero() {
                   &gt;_
                 </span>
                 <TypeAnimation
+                  ref={typeRef}
                   sequence={SEQUENCE}
-                  speed={70}
-                  deletionSpeed={80}
+                  speed={30}
+                  deletionSpeed={70}
                   cursor
                   wrapper="span"
                   repeat={0}
                 />
+                {ghost && (
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      WebkitTextFillColor: '#6B7383',
+                      color: '#6B7383'
+                    }}
+                  >
+                    {ghost}
+                  </span>
+                )}
               </span>
             </h1>
             <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
