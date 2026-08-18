@@ -74,14 +74,19 @@ export default function Hero() {
       diffIndex += 1;
     }
 
-    if (diffIndex >= current.length) {
+    let activeIdx = diffIndex;
+    while (activeIdx < current.length && current[activeIdx] === ' ') {
+      activeIdx += 1;
+    }
+
+    if (activeIdx >= current.length) {
       return { stable: current, active: '', tail: '' };
     }
 
     return {
-      stable: current.slice(0, diffIndex),
-      active: current[diffIndex] ?? '',
-      tail: current.slice(diffIndex + 1)
+      stable: current.slice(0, activeIdx),
+      active: current[activeIdx],
+      tail: current.slice(activeIdx + 1)
     };
   }, [displayName, prevName]);
 
