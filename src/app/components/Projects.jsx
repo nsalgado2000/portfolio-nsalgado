@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import ProjectBadges from './ProjectBadges';
+import TechTags from './TechTags';
 
 const projects = [
   {
@@ -11,6 +12,7 @@ const projects = [
     image: '/project-1.png',
     status: 'done',
     authorship: 'solo',
+    stack: ['Next.js', 'React', 'Tailwind CSS'],
   },
   {
     id: 2,
@@ -64,6 +66,7 @@ export default function Projects() {
                 <p className="text-[#D8DEE9]/80 mb-4">
                   {project.description}
                 </p>
+                <TechTags stack={project.stack} />
                 <span className="text-[#88C0D0] hover:text-[#81A1C1] font-medium inline-flex items-center">
                   View more <span className="ml-1">→</span>
                 </span>
