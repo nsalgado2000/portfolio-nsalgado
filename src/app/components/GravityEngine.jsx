@@ -37,13 +37,14 @@ export default function GravityEngine() {
       const overlapsX = (a, b) =>
         a.origRight > b.origLeft + 2 && a.origLeft + 2 < b.origRight;
 
-      const effectiveFloor = (body) => {
+      const effectiveFloor = (body, prevY) => {
         let floor = body.baseFloor;
         for (const other of bodies) {
           if (other === body) continue;
+          if (!other.settled) continue;
           if (!overlapsX(body, other)) continue;
           const contact = other.origTop + other.y - body.origBottom;
-          if (contact >= 0 && contact < floor) {
+          if (contact >= 0 && prevY <= contact && contact < floor) {
             floor = contact;
           }
         }
@@ -60,10 +61,11 @@ export default function GravityEngine() {
         bodies.forEach((b) => {
           if (b.settled) return;
           stillMoving = true;
+          const prevY = b.y;
           b.v += GRAVITY * dt;
           b.y += b.v * dt;
 
-          const floor = effectiveFloor(b);
+          const floor = effectiveFloor(b, prevY);
 
           if (b.y >= floor) {
             b.y = floor;
@@ -74,7 +76,7 @@ export default function GravityEngine() {
             }
           }
 
-          const progress = floor > 0 ? Math.min(b.y / floor, 1) : 1;
+          const progress = b.baseFloor > 0 ? Math.min(b.y / b.baseFloor, 1) : 1;
           b.el.style.transform = `translateY(${b.y}px) rotate(${b.rot * progress}deg)`;
         });
 
