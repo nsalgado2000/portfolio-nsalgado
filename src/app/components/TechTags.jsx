@@ -7,8 +7,10 @@ import {
   SiPython,
   SiJavascript,
   SiTypescript,
+  SiPostgresql,
+  SiDocker,
 } from 'react-icons/si';
-import { FaJava } from 'react-icons/fa';
+import { FaJava, FaAws } from 'react-icons/fa';
 
 const TECH_META = {
   'Next.js': { Icon: SiNextdotjs, color: '#ECEFF4' },
@@ -20,6 +22,9 @@ const TECH_META = {
   Python: { Icon: SiPython, color: '#EBCB8B' },
   JavaScript: { Icon: SiJavascript, color: '#EBCB8B' },
   TypeScript: { Icon: SiTypescript, color: '#81A1C1' },
+  PostgreSQL: { Icon: SiPostgresql, color: '#88C0D0' },
+  AWS: { Icon: FaAws, color: '#EBCB8B' },
+  Docker: { Icon: SiDocker, color: '#81A1C1' },
 };
 
 export default function TechTags({ stack }) {

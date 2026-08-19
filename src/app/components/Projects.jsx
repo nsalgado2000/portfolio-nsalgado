@@ -22,6 +22,7 @@ const projects = [
     image: '/project-2.png',
     status: 'in-progress',
     authorship: 'contributor',
+    stack: ['Next.js', 'React', 'Tailwind CSS', 'Spring Boot', 'PostgreSQL', 'AWS', 'Docker'],
   },
   // {
   //   id: 3,
