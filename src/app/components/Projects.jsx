@@ -44,7 +44,7 @@ export default function Projects() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0] block cursor-pointer"
+              className="group bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0] block cursor-pointer"
             >
               {project.image ? (
                 <div className="aspect-video relative overflow-hidden">
@@ -67,8 +67,20 @@ export default function Projects() {
                   {project.description}
                 </p>
                 <TechTags stack={project.stack} />
-                <span className="text-[#88C0D0] hover:text-[#81A1C1] font-medium inline-flex items-center">
-                  View more <span className="ml-1">→</span>
+                <span className="text-[#88C0D0] group-hover:text-[#81A1C1] font-medium inline-flex items-center">
+                  View more
+                  <svg
+                    className="h-4 w-4 ml-1.5 transition-transform group-hover:translate-x-1"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 12h16M14 6l6 6-6 6" />
+                  </svg>
                 </span>
               </div>
             </Link>

@@ -151,7 +151,18 @@ export default function Hero() {
               className="group px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 bg-[#88C0D0] text-[#2E3440] rounded-full hover:bg-[#81A1C1] transition-all hover:scale-105 shadow-lg hover:shadow-[#88C0D0]/25 text-sm sm:text-base md:text-lg font-medium"
             >
               View Projects
-              <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
+              <svg
+                className="inline-block h-4 w-4 sm:h-5 sm:w-5 ml-2 -mt-0.5 transition-transform group-hover:translate-x-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 12h16M14 6l6 6-6 6" />
+              </svg>
             </Link>
             <Link
               href="#contact"
