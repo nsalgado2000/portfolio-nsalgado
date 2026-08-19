@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import ProjectBadges from './ProjectBadges';
 
 const projects = [
   {
@@ -8,6 +9,8 @@ const projects = [
     description: 'Professional landing page for Wella Professionals educator, featuring service showcases, portfolio gallery, and client testimonials. Built with Next.js and modern web technologies.',
     link: 'https://gisele-landing-page-next.vercel.app/',
     image: '/project-1.png',
+    status: 'done',
+    authorship: 'solo',
   },
   {
     id: 2,
@@ -15,6 +18,8 @@ const projects = [
     description: 'Condominium management system focused on administrative solutions, performance analysis, and financial control. Features messaging system, alerts, and shared space allocation for residents. Full frontend development and partial API implementation.',
     link: 'https://www.condway.io',
     image: '/project-2.png',
+    status: 'in-progress',
+    authorship: 'contributor',
   },
   // {
   //   id: 3,
@@ -41,6 +46,7 @@ export default function Projects() {
             >
               {project.image ? (
                 <div className="aspect-video relative overflow-hidden">
+                  <ProjectBadges status={project.status} authorship={project.authorship} />
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -49,7 +55,9 @@ export default function Projects() {
                   />
                 </div>
               ) : (
-                <div className="aspect-video bg-[#4C566A]"></div>
+                <div className="aspect-video relative bg-[#4C566A]">
+                  <ProjectBadges status={project.status} authorship={project.authorship} />
+                </div>
               )}
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-2 text-[#ECEFF4]">{project.title}</h3>
