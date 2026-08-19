@@ -35,16 +35,22 @@ export default function TechTags({ stack }) {
         return (
           <span
             key={tech}
-            className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-semibold transition-colors"
+            className="inline-flex items-center gap-2 rounded-md border py-1 pl-1 pr-3 text-xs font-bold transition-transform hover:scale-105"
             style={{
               fontFamily: 'var(--font-jetbrains-mono)',
-              color,
-              borderColor: `${color}40`,
-              backgroundColor: `${color}14`,
+              borderColor: `${color}50`,
+              backgroundColor: '#2E3440',
             }}
           >
-            {Icon && <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
-            {tech}
+            {Icon && (
+              <span
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded"
+                style={{ backgroundColor: color }}
+              >
+                <Icon className="h-3.5 w-3.5" style={{ color: '#2E3440' }} aria-hidden="true" />
+              </span>
+            )}
+            <span style={{ color: '#ECEFF4' }}>{tech}</span>
           </span>
         );
       })}
