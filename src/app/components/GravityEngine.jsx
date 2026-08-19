@@ -25,10 +25,30 @@ export default function GravityEngine() {
           el,
           y: 0,
           v: 0,
-          floor: Math.max(window.innerHeight - rect.bottom + rect.height * 0.2, 24),
+          origLeft: rect.left,
+          origRight: rect.right,
+          origTop: rect.top,
+          origBottom: rect.bottom,
+          baseFloor: Math.max(window.innerHeight - rect.bottom + rect.height * 0.2, 24),
           rot: (Math.random() - 0.5) * 60,
         };
       });
+
+      const overlapsX = (a, b) =>
+        a.origRight > b.origLeft + 2 && a.origLeft + 2 < b.origRight;
+
+      const effectiveFloor = (body) => {
+        let floor = body.baseFloor;
+        for (const other of bodies) {
+          if (other === body) continue;
+          if (!overlapsX(body, other)) continue;
+          const contact = other.origTop + other.y - body.origBottom;
+          if (contact >= 0 && contact < floor) {
+            floor = contact;
+          }
+        }
+        return floor;
+      };
 
       let last = performance.now();
 
@@ -43,8 +63,10 @@ export default function GravityEngine() {
           b.v += GRAVITY * dt;
           b.y += b.v * dt;
 
-          if (b.y >= b.floor) {
-            b.y = b.floor;
+          const floor = effectiveFloor(b);
+
+          if (b.y >= floor) {
+            b.y = floor;
             b.v = -b.v * RESTITUTION;
             if (Math.abs(b.v) < SETTLE_VELOCITY) {
               b.v = 0;
@@ -52,7 +74,7 @@ export default function GravityEngine() {
             }
           }
 
-          const progress = Math.min(b.y / b.floor, 1);
+          const progress = floor > 0 ? Math.min(b.y / floor, 1) : 1;
           b.el.style.transform = `translateY(${b.y}px) rotate(${b.rot * progress}deg)`;
         });
 
