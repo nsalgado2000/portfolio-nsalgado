@@ -1,5 +1,6 @@
 import { Inter, Poppins } from 'next/font/google'
 import './globals.css'
+import MadeByBadge from './components/MadeByBadge'
 
 export const metadata = {
   title: 'Nicolas Salgado | Portfolio',
@@ -22,7 +23,10 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="bg-[#2E3440] text-gray-100">{children}</body>
+      <body className="bg-[#2E3440] text-gray-100">
+        {children}
+        <MadeByBadge />
+      </body>
     </html>
   )
 }
