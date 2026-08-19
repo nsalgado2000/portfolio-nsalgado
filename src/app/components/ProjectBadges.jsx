@@ -1,36 +1,71 @@
+const ICONS = {
+  check: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  ),
+  spinner: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+      <path d="M12 3a9 9 0 1 0 9 9" />
+    </svg>
+  ),
+  code: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+      <path d="m9 6-6 6 6 6M15 6l6 6-6 6" />
+    </svg>
+  ),
+  branch: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="6" cy="6" r="2.5" />
+      <circle cx="18" cy="6" r="2.5" />
+      <circle cx="6" cy="18" r="2.5" />
+      <path d="M6 8.5v7M8.3 6.9C13 8 15.5 9 15.5 14.5c0 1.4 1 3 2.5 3" />
+    </svg>
+  ),
+};
+
 const STATUS_STYLES = {
   done: {
     label: 'DONE',
-    className: 'text-[#A3BE8C] border-[#A3BE8C]/40 bg-[#A3BE8C]/10',
-    dot: 'bg-[#A3BE8C]',
+    icon: 'check',
+    accent: '#A3BE8C',
   },
   'in-progress': {
     label: 'IN PROGRESS',
-    className: 'text-[#EBCB8B] border-[#EBCB8B]/40 bg-[#EBCB8B]/10',
-    dot: 'bg-[#EBCB8B] animate-pulse',
+    icon: 'spinner',
+    accent: '#EBCB8B',
+    spin: true,
   },
 };
 
 const AUTHORSHIP_STYLES = {
   solo: {
-    label: '100% MINE',
-    className: 'text-[#88C0D0] border-[#88C0D0]/40 bg-[#88C0D0]/10',
-    dot: 'bg-[#88C0D0]',
+    label: 'SOLO BUILD',
+    icon: 'code',
+    accent: '#88C0D0',
   },
   contributor: {
     label: 'WORKED IN',
-    className: 'text-[#B48EAD] border-[#B48EAD]/40 bg-[#B48EAD]/10',
-    dot: 'bg-[#B48EAD]',
+    icon: 'branch',
+    accent: '#B48EAD',
   },
 };
 
-function Badge({ label, className, dot }) {
+function Badge({ label, icon, accent, spin }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wide backdrop-blur-sm ${className}`}
-      style={{ fontFamily: 'var(--font-jetbrains-mono)' }}
+      className="group/badge inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wide backdrop-blur-md transition-transform hover:scale-105"
+      style={{
+        fontFamily: 'var(--font-jetbrains-mono)',
+        color: accent,
+        borderColor: `${accent}55`,
+        backgroundColor: `${accent}1A`,
+        boxShadow: `0 0 10px 0 ${accent}40`,
+      }}
     >
-      <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden="true" />
+      <span className={`h-2.5 w-2.5 shrink-0 ${spin ? 'animate-spin' : ''}`} aria-hidden="true">
+        {ICONS[icon]}
+      </span>
       {label}
     </span>
   );
