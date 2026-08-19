@@ -26,7 +26,7 @@ export const translations = {
       degreeTitle: 'Bachelor in Information Systems — UFJF',
       location: 'Juiz de Fora, MG',
       degreeDescription:
-        'Currently pursuing a Bachelor in Information Systems with focus on software engineering, databases, and IT management. Teaching assistant in Data Structures and involved in extension projects.',
+        'Currently pursuing a Bachelor in Information Systems with focus on software engineering, databases, and IT management. Freelance Data Science instructor.',
       tags: ['Linux', 'REST APIs', 'CRUD and business rules', 'Git workflows'],
       englishTitle: 'English Proficiency',
       englishLevel: 'EF SET — C1 (Advanced)',
@@ -87,7 +87,7 @@ export const translations = {
       degreeTitle: 'Bacharelado em Sistemas de Informação — UFJF',
       location: 'Juiz de Fora, MG',
       degreeDescription:
-        'Cursando Bacharelado em Sistemas de Informação com foco em engenharia de software, bancos de dados e gestão de TI. Monitor de Estruturas de Dados e envolvido em projetos de extensão.',
+        'Bacharelando em Sistemas de Informação com foco em engenharia de software, bancos de dados e gestão de TI. Professor freelance de Ciência de Dados.',
       tags: ['Linux', 'APIs REST', 'CRUD e regras de negócio', 'Fluxos de trabalho com Git'],
       englishTitle: 'Proficiência em Inglês',
       englishLevel: 'EF SET — C1 (Avançado)',
@@ -101,13 +101,13 @@ export const translations = {
     projects: {
       heading: 'Projetos em Destaque',
       viewMore: 'Ver mais',
-      techIUsed: 'TECH QUE USEI',
+      techIUsed: 'TECNOLOGIAS QUE USEI',
       status: { done: 'PRONTO', 'in-progress': 'EM ANDAMENTO' },
       authorship: { solo: 'PROJETO SOLO', contributor: 'COLABOREI' },
       items: {
         1: {
           description:
-            'Landing page profissional para a educadora Wella Professionals, com vitrine de serviços, galeria de portfólio e depoimentos de clientes. Construída com Next.js e tecnologias web modernas.',
+            'Landing page profissional para uma educadora Wella Professionals, com vitrine de serviços, galeria de portfólio e depoimentos de clientes. Construída com Next.js e tecnologias web modernas.',
         },
         2: {
           description:
