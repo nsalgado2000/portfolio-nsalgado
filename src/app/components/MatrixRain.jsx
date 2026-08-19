@@ -107,7 +107,7 @@ const MatrixRain = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10 bg-[#2E3440]"
+      className="fixed inset-0 w-full h-full -z-10 bg-[#2E3440]"
     />
   );
 };
