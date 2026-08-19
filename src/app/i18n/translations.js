@@ -87,7 +87,7 @@ export const translations = {
       degreeTitle: 'Bacharelado em Sistemas de Informação — UFJF',
       location: 'Juiz de Fora, MG',
       degreeDescription:
-        'Bacharelando em Sistemas de Informação com foco em engenharia de software, bancos de dados e gestão de TI. Professor freelance de Ciência de Dados.',
+        'Bacharelando em Sistemas de Informação com foco em engenharia de software, bancos de dados e gestão de TI. Instrutor freelance de Ciência de Dados.',
       tags: ['Linux', 'APIs REST', 'CRUD e regras de negócio', 'Fluxos de trabalho com Git'],
       englishTitle: 'Proficiência em Inglês',
       englishLevel: 'EF SET — C1 (Avançado)',
