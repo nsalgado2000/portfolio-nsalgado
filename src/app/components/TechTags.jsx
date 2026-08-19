@@ -31,8 +31,15 @@ export default function TechTags({ stack }) {
   if (!stack || stack.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
-      {stack.map((tech) => {
+    <div className="mb-4">
+      <p
+        className="mb-2 text-[10px] font-bold tracking-widest text-[#D8DEE9]/40"
+        style={{ fontFamily: 'var(--font-jetbrains-mono)' }}
+      >
+        TECH I USED
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {stack.map((tech) => {
         const meta = TECH_META[tech];
         const Icon = meta?.Icon;
         const color = meta?.color ?? '#D8DEE9';
@@ -58,7 +65,8 @@ export default function TechTags({ stack }) {
             <span style={{ color: '#ECEFF4' }}>{tech}</span>
           </span>
         );
-      })}
+        })}
+      </div>
     </div>
   );
 }
