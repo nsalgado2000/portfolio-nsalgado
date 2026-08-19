@@ -30,10 +30,11 @@ function TrickCard({ label, description, active, onClick, onLabel, offLabel, ico
     <button
       type="button"
       onClick={onClick}
-      className="flex flex-col items-start gap-3 rounded-xl border p-6 text-left transition-all hover:scale-105"
+      className="relative flex flex-col items-start gap-3 rounded-xl border p-6 text-left transition-all hover:scale-105"
       style={{
         borderColor: active ? '#88C0D0' : '#4C566A',
-        backgroundColor: active ? '#88C0D014' : '#2E3440',
+        backgroundColor: active ? '#353F4C' : '#2E3440',
+        zIndex: active ? 50 : 'auto',
       }}
     >
       <div className="flex w-full items-center justify-between">
