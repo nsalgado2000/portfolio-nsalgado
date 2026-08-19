@@ -59,6 +59,15 @@ export const translations = {
       description: "I'm always interested in new projects and collaboration opportunities.",
       email: 'Email',
     },
+    tricks: {
+      heading: 'Little Tricks',
+      subheading: 'A few things I built into this page just to show what I can do.',
+      mouseTrail: { label: 'Mouse Trail', description: 'Cursor particle trail' },
+      gravity: { label: 'Gravity', description: 'Make things fall' },
+      reroll: { label: 'Reroll Background', description: 'New particle pattern' },
+      on: 'ON',
+      off: 'OFF',
+    },
   },
   pt: {
     hero: {
@@ -119,6 +128,15 @@ export const translations = {
       heading: 'Vamos Conversar',
       description: 'Estou sempre interessado em novos projetos e oportunidades de colaboração.',
       email: 'E-mail',
+    },
+    tricks: {
+      heading: 'Pequenos Truques',
+      subheading: 'Umas coisas que coloquei nessa página só pra mostrar o que sei fazer.',
+      mouseTrail: { label: 'Rastro do Mouse', description: 'Rastro de partículas no cursor' },
+      gravity: { label: 'Gravidade', description: 'Faz tudo cair' },
+      reroll: { label: 'Novo Padrão de Fundo', description: 'Gera um novo padrão de partículas' },
+      on: 'ON',
+      off: 'OFF',
     },
   },
 };

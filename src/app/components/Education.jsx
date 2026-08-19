@@ -82,7 +82,7 @@ export default function Education() {
           {t.education.heading}
         </h2>
         <div className="max-w-3xl mx-auto">
-          <div className="bg-[#3B4252] rounded-xl p-8 border border-[#4C566A] hover:border-[#88C0D0] transition-all hover:shadow-xl">
+          <div className="js-gravity bg-[#3B4252] rounded-xl p-8 border border-[#4C566A] hover:border-[#88C0D0] transition-all hover:shadow-xl">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
               <div className="flex-shrink-0">
                 <div className="w-24 h-24 bg-[#2E3440] rounded-md flex items-center justify-center border border-[#4C566A] overflow-hidden relative">
@@ -123,7 +123,7 @@ export default function Education() {
               </div>
             </div>
           </div>
-          <div className="bg-[#3B4252] rounded-xl border border-[#4C566A] hover:border-[#88C0D0] transition-all hover:shadow-xl mt-6 overflow-hidden">
+          <div className="js-gravity bg-[#3B4252] rounded-xl border border-[#4C566A] hover:border-[#88C0D0] transition-all hover:shadow-xl mt-6 overflow-hidden">
             <div className="w-full bg-[#2E3440] border-b border-[#4C566A] relative">
               {certificateImage && (
                 <div className="w-full max-h-[26rem] overflow-auto flex justify-center p-4">

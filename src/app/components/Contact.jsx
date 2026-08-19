@@ -42,7 +42,7 @@ export default function Contact() {
               href={links[platform]}
               target={platform === 'Email' ? '_self' : '_blank'}
               rel={platform === 'Email' ? '' : 'noopener noreferrer'}
-              className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg bg-[#2E3440] text-[#D8DEE9] hover:text-[#88C0D0] transition-colors border border-[#4C566A] hover:border-[#88C0D0] inline-flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs sm:max-w-none"
+              className="js-gravity px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg bg-[#2E3440] text-[#D8DEE9] hover:text-[#88C0D0] transition-colors border border-[#4C566A] hover:border-[#88C0D0] inline-flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center max-w-xs sm:max-w-none"
             >
               {icons[platform]}
               {platform === 'Email' ? t.contact.email : platform}

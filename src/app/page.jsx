@@ -5,6 +5,7 @@ import Education from './components/Education';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import MatrixRain from './components/MatrixRain';
+import LittleTricks from './components/LittleTricks';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <TechStack />
       <Education />
       <Projects />
+      <LittleTricks />
       <Contact />
     </main>
   );

@@ -46,7 +46,7 @@ export default function Projects() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0] block cursor-pointer"
+              className="js-gravity group bg-[#3B4252] rounded-xl overflow-hidden hover:shadow-xl transition-all hover:scale-105 border border-[#4C566A] hover:border-[#88C0D0] block cursor-pointer"
             >
               {project.image ? (
                 <div className="aspect-video relative overflow-hidden">

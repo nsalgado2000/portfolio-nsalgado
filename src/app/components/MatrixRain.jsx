@@ -22,6 +22,15 @@ const MatrixRain = () => {
     const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
     let particles = [];
 
+    const PALETTES = [
+      ['#88C0D0', '#81A1C1'],
+      ['#A3BE8C', '#8FBCBB'],
+      ['#B48EAD', '#81A1C1'],
+      ['#EBCB8B', '#D08770'],
+      ['#BF616A', '#B48EAD'],
+    ];
+    let palette = PALETTES[0];
+
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -30,7 +39,7 @@ const MatrixRain = () => {
         this.speedX = (Math.random() - 0.5) * 2.5;
         this.speedY = (Math.random() - 0.5) * 2.5;
         this.opacity = Math.random() * 0.3 + 0.1;
-        this.color = Math.random() > 0.5 ? '#88C0D0' : '#81A1C1';
+        this.color = Math.random() > 0.5 ? palette[0] : palette[1];
       }
 
       update() {
@@ -97,10 +106,21 @@ const MatrixRain = () => {
       initializeParticles();
     }, 30000);
 
+    const handleReroll = () => {
+      let next = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+      if (next === palette) next = PALETTES[(PALETTES.indexOf(next) + 1) % PALETTES.length];
+      palette = next;
+      ctx.fillStyle = '#2E3440';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      initializeParticles();
+    };
+    window.addEventListener('reroll-background', handleReroll);
+
     return () => {
       clearInterval(interval);
       clearInterval(resetInterval);
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('reroll-background', handleReroll);
     };
   }, []);
 

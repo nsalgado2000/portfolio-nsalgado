@@ -26,7 +26,7 @@ export default function TechStack() {
           {Object.entries(technologies).map(([tech, info]) => (
             <div
               key={tech}
-              className="group relative"
+              className="js-gravity group relative"
             >
               <div className="p-5 bg-[#2E3440] rounded-lg shadow-lg transition-all duration-500 ease-out border border-[#4C566A] hover:border-[#88C0D0] cursor-pointer overflow-hidden group-hover:scale-110 group-hover:z-20 group-hover:shadow-2xl min-h-[100px] group-hover:min-h-[280px]">
                 <div className="flex items-center justify-center min-h-[100px] group-hover:absolute group-hover:opacity-0 group-hover:pointer-events-none transition-all duration-300">
