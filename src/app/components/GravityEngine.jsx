@@ -4,8 +4,6 @@ import { useEffect, useRef } from 'react';
 import { useTricks } from '../context/TricksContext';
 
 const GRAVITY = 2800; // px/s^2
-const RESTITUTION = 0.42;
-const SETTLE_VELOCITY = 90;
 
 export default function GravityEngine() {
   const { gravityOn } = useTricks();
@@ -69,11 +67,8 @@ export default function GravityEngine() {
 
           if (b.y >= floor) {
             b.y = floor;
-            b.v = -b.v * RESTITUTION;
-            if (Math.abs(b.v) < SETTLE_VELOCITY) {
-              b.v = 0;
-              b.settled = true;
-            }
+            b.v = 0;
+            b.settled = true;
           }
 
           const progress = b.baseFloor > 0 ? Math.min(b.y / b.baseFloor, 1) : 1;
