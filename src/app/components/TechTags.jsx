@@ -1,3 +1,6 @@
+'use client';
+
+import { useLanguage } from '../context/LanguageContext';
 import {
   SiNextdotjs,
   SiReact,
@@ -28,6 +31,7 @@ const TECH_META = {
 };
 
 export default function TechTags({ stack }) {
+  const { t } = useLanguage();
   if (!stack || stack.length === 0) return null;
 
   return (
@@ -36,7 +40,7 @@ export default function TechTags({ stack }) {
         className="mb-2 text-[10px] font-bold tracking-widest text-[#D8DEE9]/40"
         style={{ fontFamily: 'var(--font-jetbrains-mono)' }}
       >
-        TECH I USED
+        {t.projects.techIUsed}
       </p>
       <div className="flex flex-wrap gap-2">
         {stack.map((tech) => {

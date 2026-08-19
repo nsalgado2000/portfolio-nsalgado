@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const FULL_NAME = 'Nicolas Salgado';
 
@@ -27,6 +28,7 @@ const FRAMES = [
 ];
 
 export default function Hero() {
+  const { t } = useLanguage();
   const [displayName, setDisplayName] = useState('');
   const [showCursor, setShowCursor] = useState(true);
 
@@ -139,10 +141,10 @@ export default function Hero() {
             <div className="absolute -inset-1 blur-2xl bg-gradient-to-r from-[#88C0D0]/20 to-[#81A1C1]/20 -z-10"></div>
           </div>
           <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#ECEFF4]/80 font-light">
-            Experienced Fullstack Developer
+            {t.hero.tagline}
           </p>
           <p className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg lg:text-xl text-[#D8DEE9]/60 leading-relaxed px-2">
-            Specialized in Java with Spring Boot, React, Next.js, and FastAPI. Building scalable, high-performance applications with clean code and modern architecture.
+            {t.hero.description}
           </p>
           <div className="flex gap-3 sm:gap-4 md:gap-6 justify-center mt-6 sm:mt-8 md:mt-12">
             <Link
@@ -150,7 +152,7 @@ export default function Hero() {
               onClick={(e) => handleSmoothScroll(e, '#projects')}
               className="group px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 bg-[#88C0D0] text-[#2E3440] rounded-full hover:bg-[#81A1C1] transition-all hover:scale-105 shadow-lg hover:shadow-[#88C0D0]/25 text-sm sm:text-base md:text-lg font-medium"
             >
-              View Projects
+              {t.hero.viewProjects}
               <svg
                 className="inline-block h-4 w-4 sm:h-5 sm:w-5 ml-2 -mt-0.5 transition-transform group-hover:translate-x-1"
                 viewBox="0 0 24 24"
@@ -169,7 +171,7 @@ export default function Hero() {
               onClick={(e) => handleSmoothScroll(e, '#contact')}
               className="group px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 border-2 border-[#88C0D0] text-[#88C0D0] rounded-full hover:bg-[#88C0D0] hover:text-[#2E3440] transition-all hover:scale-105 text-sm sm:text-base md:text-lg font-medium"
             >
-              Contact
+              {t.hero.contact}
             </Link>
           </div>
         </div>

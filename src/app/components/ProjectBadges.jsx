@@ -1,3 +1,7 @@
+'use client';
+
+import { useLanguage } from '../context/LanguageContext';
+
 const ICONS = {
   check: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -25,30 +29,13 @@ const ICONS = {
 };
 
 const STATUS_STYLES = {
-  done: {
-    label: 'DONE',
-    icon: 'check',
-    accent: '#A3BE8C',
-  },
-  'in-progress': {
-    label: 'IN PROGRESS',
-    icon: 'spinner',
-    accent: '#EBCB8B',
-    spin: true,
-  },
+  done: { icon: 'check', accent: '#A3BE8C' },
+  'in-progress': { icon: 'spinner', accent: '#EBCB8B', spin: true },
 };
 
 const AUTHORSHIP_STYLES = {
-  solo: {
-    label: 'SOLO BUILD',
-    icon: 'code',
-    accent: '#88C0D0',
-  },
-  contributor: {
-    label: 'WORKED IN',
-    icon: 'branch',
-    accent: '#B48EAD',
-  },
+  solo: { icon: 'code', accent: '#88C0D0' },
+  contributor: { icon: 'branch', accent: '#B48EAD' },
 };
 
 function Badge({ label, icon, accent, spin }) {
@@ -72,6 +59,7 @@ function Badge({ label, icon, accent, spin }) {
 }
 
 export default function ProjectBadges({ status, authorship }) {
+  const { t } = useLanguage();
   const statusStyle = STATUS_STYLES[status];
   const authorshipStyle = AUTHORSHIP_STYLES[authorship];
 
@@ -79,8 +67,8 @@ export default function ProjectBadges({ status, authorship }) {
 
   return (
     <div className="absolute top-3 right-3 z-10 flex flex-wrap justify-end gap-2">
-      {statusStyle && <Badge {...statusStyle} />}
-      {authorshipStyle && <Badge {...authorshipStyle} />}
+      {statusStyle && <Badge {...statusStyle} label={t.projects.status[status]} />}
+      {authorshipStyle && <Badge {...authorshipStyle} label={t.projects.authorship[authorship]} />}
     </div>
   );
 }

@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Education() {
+  const { t } = useLanguage();
   const [imageError, setImageError] = useState(false);
   const [pdfError, setPdfError] = useState(false);
   const canvasRef = useRef(null);
@@ -77,7 +79,7 @@ export default function Education() {
     <section className="py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12 text-[#ECEFF4]">
-          Education
+          {t.education.heading}
         </h2>
         <div className="max-w-3xl mx-auto">
           <div className="bg-[#3B4252] rounded-xl p-8 border border-[#4C566A] hover:border-[#88C0D0] transition-all hover:shadow-xl">
@@ -102,19 +104,14 @@ export default function Education() {
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-2xl font-bold text-[#ECEFF4] mb-1">
-                  Bachelor in Information Systems — UFJF
+                  {t.education.degreeTitle}
                 </h3>
-                <p className="text-sm text-[#D8DEE9]/70 mb-3">Juiz de Fora, MG</p>
+                <p className="text-sm text-[#D8DEE9]/70 mb-3">{t.education.location}</p>
                 <p className="text-[#D8DEE9]/80 mb-4">
-                  Currently pursuing a Bachelor in Information Systems with focus on software engineering, databases, and IT management. Teaching assistant in Data Structures and involved in extension projects.
+                  {t.education.degreeDescription}
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-                  {[
-                    'Linux',
-                    'REST APIs',
-                    'CRUD and business rules',
-                    'Git workflows'
-                  ].map((label) => (
+                  {t.education.tags.map((label) => (
                     <span
                       key={label}
                       className="px-3 py-1 bg-[#2E3440] text-[#D8DEE9] text-sm rounded-full border border-[#4C566A]"
@@ -139,16 +136,16 @@ export default function Education() {
               )}
               {!certificateImage && (
                 <div className="w-full h-64 flex items-center justify-center text-[#D8DEE9]/60">
-                  {pdfError ? 'Could not load certificate' : 'Loading certificate...'}
+                  {pdfError ? t.education.certificateError : t.education.loadingCertificate}
                 </div>
               )}
             </div>
             <div className="p-8 flex flex-col md:flex-row gap-6">
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-[#ECEFF4] mb-1">English Proficiency</h3>
-                <p className="text-sm text-[#D8DEE9]/70 mb-3">EF SET — C1 (Advanced)</p>
+                <h3 className="text-2xl font-bold text-[#ECEFF4] mb-1">{t.education.englishTitle}</h3>
+                <p className="text-sm text-[#D8DEE9]/70 mb-3">{t.education.englishLevel}</p>
                 <p className="text-[#D8DEE9]/80 mb-4">
-                  Currently certified at C1 level with EF SET. Reading and listening at C2, writing at C1, speaking at B1.
+                  {t.education.englishDescription}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {efSetCertificateUrl && (
@@ -158,7 +155,7 @@ export default function Education() {
                       rel="noreferrer"
                       className="inline-flex items-center justify-center px-4 py-2 bg-[#88C0D0] text-[#2E3440] font-semibold rounded-md transition-colors hover:bg-[#81A1C1]"
                     >
-                      View online
+                      {t.education.viewOnline}
                     </a>
                   )}
                   {efSetCertificateFile && (
@@ -168,7 +165,7 @@ export default function Education() {
                       rel="noreferrer"
                       className="inline-flex items-center justify-center px-4 py-2 border border-[#4C566A] text-[#ECEFF4] font-semibold rounded-md transition-colors hover:border-[#88C0D0]"
                     >
-                      Open PDF
+                      {t.education.openPdf}
                     </a>
                   )}
                 </div>

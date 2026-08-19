@@ -1,6 +1,8 @@
 import { Inter, Poppins, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import MadeByBadge from './components/MadeByBadge'
+import LanguageToggle from './components/LanguageToggle'
+import { LanguageProvider } from './context/LanguageContext'
 
 export const metadata = {
   title: 'Nicolas Salgado | Portfolio',
@@ -29,8 +31,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-[#2E3440] text-gray-100">
-        {children}
-        <MadeByBadge />
+        <LanguageProvider>
+          {children}
+          <LanguageToggle />
+          <MadeByBadge />
+        </LanguageProvider>
       </body>
     </html>
   )
