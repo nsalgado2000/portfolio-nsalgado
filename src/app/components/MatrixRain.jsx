@@ -34,42 +34,79 @@ const MatrixRain = () => {
     let palette = PALETTES[0];
     let pattern = PATTERNS[0];
 
+    const hexToRgba = (hex, a) => {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${a})`;
+    };
+
     class Particle {
       constructor() {
         this.color = Math.random() > 0.5 ? palette[0] : palette[1];
 
         if (pattern === 'rain') {
-          this.size = Math.random() * 1.0 + 1.0;
-          this.opacity = Math.random() * 0.3 + 0.45;
+          const layer = Math.random();
+          if (layer < 0.4) {
+            this.size = 0.6 + Math.random() * 0.4;
+            this.opacity = 0.28 + Math.random() * 0.14;
+            this.speedY = 0.7 + Math.random() * 0.6;
+          } else if (layer < 0.8) {
+            this.size = 1.0 + Math.random() * 0.6;
+            this.opacity = 0.42 + Math.random() * 0.18;
+            this.speedY = 1.6 + Math.random() * 0.9;
+          } else {
+            this.size = 1.6 + Math.random() * 0.8;
+            this.opacity = 0.58 + Math.random() * 0.22;
+            this.speedY = 2.7 + Math.random() * 1.5;
+          }
+          this.streakLen = this.speedY * 6 + 6;
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
-          this.speedX = (Math.random() - 0.5) * 0.3;
-          this.speedY = Math.random() * 1.8 + 0.6;
+          this.speedX = (Math.random() - 0.5) * 0.15;
         } else if (pattern === 'orbits') {
-          this.size = Math.random() * 1.2 + 0.9;
-          this.opacity = Math.random() * 0.3 + 0.4;
+          this.size = 0.9 + Math.random() * 1.2;
+          this.opacity = 0.5 + Math.random() * 0.25;
           const center =
             orbitCenters[Math.floor(Math.random() * orbitCenters.length)];
           this.center = center;
           this.angle = Math.random() * Math.PI * 2;
-          this.radius = Math.random() * 180 + 40;
-          this.orbitSpeed = ((Math.random() - 0.5) * 0.02 + 0.005) *
-            (Math.random() > 0.5 ? 1 : -1);
+          this.radius = 40 + Math.random() * 220;
+          const dir = Math.random() > 0.5 ? 1 : -1;
+          this.orbitSpeed = (0.003 + Math.random() * 0.009) * dir;
+          this.trail = [];
+          this.trailMax = 10 + Math.floor(Math.random() * 8);
           this.x = center.x + Math.cos(this.angle) * this.radius;
           this.y = center.y + Math.sin(this.angle) * this.radius;
         } else if (pattern === 'waves') {
-          this.size = Math.random() * 1.4 + 1.1;
-          this.opacity = Math.random() * 0.3 + 0.45;
+          const layer = Math.floor(Math.random() * 3);
+          if (layer === 0) {
+            this.size = 1.0 + Math.random() * 0.4;
+            this.opacity = 0.35 + Math.random() * 0.15;
+            this.amplitude = 10 + Math.random() * 8;
+            this.frequency = 0.006 + Math.random() * 0.004;
+            this.speedX = 0.35 + Math.random() * 0.4;
+          } else if (layer === 1) {
+            this.size = 1.3 + Math.random() * 0.6;
+            this.opacity = 0.5 + Math.random() * 0.2;
+            this.amplitude = 22 + Math.random() * 12;
+            this.frequency = 0.004 + Math.random() * 0.003;
+            this.speedX = 0.6 + Math.random() * 0.6;
+          } else {
+            this.size = 1.8 + Math.random() * 0.9;
+            this.opacity = 0.6 + Math.random() * 0.2;
+            this.amplitude = 40 + Math.random() * 18;
+            this.frequency = 0.002 + Math.random() * 0.002;
+            this.speedX = 0.9 + Math.random() * 0.8;
+          }
+          this.layer = layer;
           this.x = Math.random() * canvas.width;
           this.baseY = Math.random() * canvas.height;
           this.y = this.baseY;
-          this.speedX = 0.5 + Math.random() * 1.2;
-          this.amplitude = Math.random() * 24 + 8;
-          this.frequency = 0.005 + Math.random() * 0.01;
           this.phase = Math.random() * Math.PI * 2;
         } else {
-          this.size = Math.random() * 0.6 + 0.3;
-          this.opacity = Math.random() * 0.3 + 0.1;
+          this.size = 0.3 + Math.random() * 0.6;
+          this.opacity = 0.1 + Math.random() * 0.3;
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
           this.speedX = (Math.random() - 0.5) * 2.5;
@@ -81,20 +118,24 @@ const MatrixRain = () => {
         if (pattern === 'rain') {
           this.x += this.speedX;
           this.y += this.speedY;
-          if (this.y > canvas.height + 4) {
-            this.y = -4;
+          if (this.y > canvas.height + this.streakLen) {
+            this.y = -this.streakLen;
             this.x = Math.random() * canvas.width;
           }
           if (this.x < 0) this.x = canvas.width;
           if (this.x > canvas.width) this.x = 0;
         } else if (pattern === 'orbits') {
+          this.trail.push({ x: this.x, y: this.y });
+          if (this.trail.length > this.trailMax) this.trail.shift();
           this.angle += this.orbitSpeed;
           this.x = this.center.x + Math.cos(this.angle) * this.radius;
           this.y = this.center.y + Math.sin(this.angle) * this.radius;
         } else if (pattern === 'waves') {
           this.x += this.speedX;
-          if (this.x > canvas.width + 20) this.x = -20;
-          this.y = this.baseY + Math.sin(this.phase + this.x * this.frequency) * this.amplitude;
+          if (this.x > canvas.width + 30) this.x = -30;
+          this.y =
+            this.baseY +
+            Math.sin(this.phase + this.x * this.frequency) * this.amplitude;
         } else {
           this.x += this.speedX;
           this.y += this.speedY;
@@ -104,12 +145,45 @@ const MatrixRain = () => {
       }
 
       draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.opacity;
-        ctx.fill();
-        ctx.globalAlpha = 1;
+        if (pattern === 'rain') {
+          const tailY = this.y - this.streakLen;
+          const grad = ctx.createLinearGradient(this.x, tailY, this.x, this.y);
+          grad.addColorStop(0, hexToRgba(this.color, 0));
+          grad.addColorStop(1, hexToRgba(this.color, this.opacity));
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = this.size;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(this.x, tailY);
+          ctx.lineTo(this.x, this.y);
+          ctx.stroke();
+          ctx.fillStyle = hexToRgba(this.color, Math.min(1, this.opacity + 0.15));
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 0.9, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (pattern === 'orbits') {
+          for (let i = 1; i < this.trail.length; i++) {
+            const a = (i / this.trail.length) * this.opacity * 0.55;
+            ctx.strokeStyle = hexToRgba(this.color, a);
+            ctx.lineWidth = this.size * 0.6;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(this.trail[i - 1].x, this.trail[i - 1].y);
+            ctx.lineTo(this.trail[i].x, this.trail[i].y);
+            ctx.stroke();
+          }
+          ctx.fillStyle = hexToRgba(this.color, this.opacity);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = this.opacity;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
       }
     }
 
@@ -134,35 +208,59 @@ const MatrixRain = () => {
 
     initializeParticles();
 
+    function drawOrbitGlows() {
+      orbitCenters.forEach((c) => {
+        const grad = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, 120);
+        grad.addColorStop(0, hexToRgba(palette[0], 0.12));
+        grad.addColorStop(0.6, hexToRgba(palette[1], 0.05));
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 120, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawConstellationLines() {
+      particles.forEach((particle, i) => {
+        particles.slice(i + 1).forEach((otherParticle) => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 120) {
+            ctx.beginPath();
+            ctx.strokeStyle = particle.color;
+            ctx.globalAlpha = (1 - distance / 120) * 0.15;
+            ctx.lineWidth = 0.5;
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+        });
+      });
+    }
+
+    const fadeAlphaByPattern = {
+      constellation: 0.02,
+      rain: 0.16,
+      orbits: 0.08,
+      waves: 0.06,
+    };
+
     function draw() {
-      ctx.fillStyle = 'rgba(46, 52, 64, 0.02)';
+      const fadeA = fadeAlphaByPattern[pattern] || 0.02;
+      ctx.fillStyle = `rgba(46, 52, 64, ${fadeA})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (pattern === 'orbits') drawOrbitGlows();
 
       particles.forEach((particle) => {
         particle.update();
         particle.draw();
       });
 
-      if (pattern === 'constellation') {
-        particles.forEach((particle, i) => {
-          particles.slice(i + 1).forEach((otherParticle) => {
-            const dx = particle.x - otherParticle.x;
-            const dy = particle.y - otherParticle.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 120) {
-              ctx.beginPath();
-              ctx.strokeStyle = particle.color;
-              ctx.globalAlpha = (1 - distance / 120) * 0.15;
-              ctx.lineWidth = 0.5;
-              ctx.moveTo(particle.x, particle.y);
-              ctx.lineTo(otherParticle.x, otherParticle.y);
-              ctx.stroke();
-              ctx.globalAlpha = 1;
-            }
-          });
-        });
-      }
+      if (pattern === 'constellation') drawConstellationLines();
     }
 
     draw();
