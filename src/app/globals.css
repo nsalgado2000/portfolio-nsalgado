@@ -20,15 +20,41 @@ html {
     background-size: 200% 200%;
     animation: gradient 8s ease infinite;
   }
-  
+
   @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-  
+
   .bg-clip-text {
     -webkit-background-clip: text;
     background-clip: text;
   }
+}
+
+html.terminal-mode body {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html.terminal-mode h2 {
+  color: #A3BE8C;
+}
+
+html.terminal-mode h2::before {
+  content: '> ';
+  color: #88C0D0;
+  margin-right: 0.15em;
+}
+
+html.terminal-mode h2::after {
+  content: '_';
+  color: #A3BE8C;
+  margin-left: 0.15em;
+  animation: term-cursor 1s step-end infinite;
+}
+
+@keyframes term-cursor {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
 }

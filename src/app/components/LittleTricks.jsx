@@ -36,6 +36,23 @@ const ICONS = {
       <path d="M7 8h10M7 10h10M7 12h10" strokeOpacity="0.55" />
     </svg>
   ),
+  terminal: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="16" rx="1.5" />
+      <path d="M7 9l3 3-3 3" />
+      <path d="M13 15h4" />
+    </svg>
+  ),
+  confetti: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 20l6-14" />
+      <path d="M10 6l8 8" />
+      <path d="M18 14l-14 6" />
+      <circle cx="16" cy="4" r="1" />
+      <circle cx="20" cy="8" r="1" />
+      <circle cx="20" cy="15" r="1" />
+    </svg>
+  ),
   reroll: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4v5h5" />
@@ -95,7 +112,10 @@ export default function LittleTricks() {
     toggleMagnet,
     crtOn,
     toggleCrt,
+    terminalOn,
+    toggleTerminal,
     rerollBackground,
+    fireConfetti,
   } = useTricks();
 
   return (
@@ -152,6 +172,22 @@ export default function LittleTricks() {
             onClick={toggleCrt}
             onLabel={t.tricks.on}
             offLabel={t.tricks.off}
+          />
+          <TrickCard
+            icon="terminal"
+            label={t.tricks.terminal.label}
+            description={t.tricks.terminal.description}
+            active={terminalOn}
+            onClick={toggleTerminal}
+            onLabel={t.tricks.on}
+            offLabel={t.tricks.off}
+          />
+          <TrickCard
+            icon="confetti"
+            label={t.tricks.confetti.label}
+            description={t.tricks.confetti.description}
+            onClick={(e) => fireConfetti(e.clientX, e.clientY)}
+            isAction
           />
           <TrickCard
             icon="reroll"

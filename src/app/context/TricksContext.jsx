@@ -10,6 +10,7 @@ export function TricksProvider({ children }) {
   const [mouseTrailOn, setMouseTrailOn] = useState(false);
   const [magnetOn, setMagnetOn] = useState(false);
   const [crtOn, setCrtOn] = useState(false);
+  const [terminalOn, setTerminalOn] = useState(false);
 
   const toggleGravity = () =>
     setGravityOn((v) => {
@@ -24,8 +25,20 @@ export function TricksProvider({ children }) {
   const toggleMouseTrail = () => setMouseTrailOn((v) => !v);
   const toggleMagnet = () => setMagnetOn((v) => !v);
   const toggleCrt = () => setCrtOn((v) => !v);
+  const toggleTerminal = () => setTerminalOn((v) => !v);
+
   const rerollBackground = () =>
     window.dispatchEvent(new Event('reroll-background'));
+
+  const fireConfetti = (x, y) =>
+    window.dispatchEvent(
+      new CustomEvent('confetti-burst', {
+        detail: {
+          x: typeof x === 'number' ? x : window.innerWidth / 2,
+          y: typeof y === 'number' ? y : window.innerHeight / 2,
+        },
+      })
+    );
 
   return (
     <TricksContext.Provider
@@ -40,7 +53,10 @@ export function TricksProvider({ children }) {
         toggleMagnet,
         crtOn,
         toggleCrt,
+        terminalOn,
+        toggleTerminal,
         rerollBackground,
+        fireConfetti,
       }}
     >
       {children}

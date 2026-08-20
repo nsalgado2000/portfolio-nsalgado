@@ -7,6 +7,8 @@ import GravityEngine from './components/GravityEngine'
 import ZeroGEngine from './components/ZeroGEngine'
 import MagnetEngine from './components/MagnetEngine'
 import CrtOverlay from './components/CrtOverlay'
+import TerminalMode from './components/TerminalMode'
+import ConfettiBurst from './components/ConfettiBurst'
 import { LanguageProvider } from './context/LanguageContext'
 import { TricksProvider } from './context/TricksContext'
 
@@ -47,6 +49,8 @@ export default function RootLayout({ children }) {
             <ZeroGEngine />
             <MagnetEngine />
             <CrtOverlay />
+            <TerminalMode />
+            <ConfettiBurst />
           </TricksProvider>
         </LanguageProvider>
       </body>
