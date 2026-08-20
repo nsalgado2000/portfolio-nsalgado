@@ -15,6 +15,27 @@ const ICONS = {
       <path d="M4 21h16" />
     </svg>
   ),
+  zeroG: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21V8m0 0l-4.5 4.5M12 8l4.5 4.5" />
+      <path d="M4 3h16" />
+    </svg>
+  ),
+  magnet: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 4v9a6 6 0 0 0 12 0V4" />
+      <path d="M6 4h4v4H6z" />
+      <path d="M14 4h4v4h-4z" />
+    </svg>
+  ),
+  crt: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="12" rx="1.5" />
+      <path d="M8 20h8" />
+      <path d="M12 16v4" />
+      <path d="M7 8h10M7 10h10M7 12h10" strokeOpacity="0.55" />
+    </svg>
+  ),
   reroll: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4v5h5" />
@@ -63,7 +84,19 @@ function TrickCard({ label, description, active, onClick, onLabel, offLabel, ico
 
 export default function LittleTricks() {
   const { t } = useLanguage();
-  const { gravityOn, toggleGravity, mouseTrailOn, toggleMouseTrail, rerollBackground } = useTricks();
+  const {
+    gravityOn,
+    toggleGravity,
+    zeroGOn,
+    toggleZeroG,
+    mouseTrailOn,
+    toggleMouseTrail,
+    magnetOn,
+    toggleMagnet,
+    crtOn,
+    toggleCrt,
+    rerollBackground,
+  } = useTricks();
 
   return (
     <section className="py-20">
@@ -74,7 +107,7 @@ export default function LittleTricks() {
         <p className="text-center text-[#D8DEE9]/60 mb-12 max-w-xl mx-auto">
           {t.tricks.subheading}
         </p>
-        <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
           <TrickCard
             icon="cursor"
             label={t.tricks.mouseTrail.label}
@@ -90,6 +123,33 @@ export default function LittleTricks() {
             description={t.tricks.gravity.description}
             active={gravityOn}
             onClick={toggleGravity}
+            onLabel={t.tricks.on}
+            offLabel={t.tricks.off}
+          />
+          <TrickCard
+            icon="zeroG"
+            label={t.tricks.zeroG.label}
+            description={t.tricks.zeroG.description}
+            active={zeroGOn}
+            onClick={toggleZeroG}
+            onLabel={t.tricks.on}
+            offLabel={t.tricks.off}
+          />
+          <TrickCard
+            icon="magnet"
+            label={t.tricks.magnet.label}
+            description={t.tricks.magnet.description}
+            active={magnetOn}
+            onClick={toggleMagnet}
+            onLabel={t.tricks.on}
+            offLabel={t.tricks.off}
+          />
+          <TrickCard
+            icon="crt"
+            label={t.tricks.crt.label}
+            description={t.tricks.crt.description}
+            active={crtOn}
+            onClick={toggleCrt}
             onLabel={t.tricks.on}
             offLabel={t.tricks.off}
           />

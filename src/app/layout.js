@@ -4,6 +4,9 @@ import MadeByBadge from './components/MadeByBadge'
 import LanguageToggle from './components/LanguageToggle'
 import MouseTrail from './components/MouseTrail'
 import GravityEngine from './components/GravityEngine'
+import ZeroGEngine from './components/ZeroGEngine'
+import MagnetEngine from './components/MagnetEngine'
+import CrtOverlay from './components/CrtOverlay'
 import { LanguageProvider } from './context/LanguageContext'
 import { TricksProvider } from './context/TricksContext'
 
@@ -41,6 +44,9 @@ export default function RootLayout({ children }) {
             <MadeByBadge />
             <MouseTrail />
             <GravityEngine />
+            <ZeroGEngine />
+            <MagnetEngine />
+            <CrtOverlay />
           </TricksProvider>
         </LanguageProvider>
       </body>
