@@ -14,9 +14,7 @@ export default function GravityEngine() {
     if (elements.length === 0) return;
 
     if (gravityOn) {
-      const floorRef =
-        document.querySelector('#contact .container') ||
-        document.querySelector('#contact');
+      const floorRef = document.querySelector('#contact');
       const floorY = floorRef
         ? floorRef.getBoundingClientRect().bottom
         : window.innerHeight;
