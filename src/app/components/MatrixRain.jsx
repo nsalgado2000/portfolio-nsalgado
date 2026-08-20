@@ -36,16 +36,18 @@ const MatrixRain = () => {
 
     class Particle {
       constructor() {
-        this.size = Math.random() * 0.6 + 0.3;
-        this.opacity = Math.random() * 0.3 + 0.1;
         this.color = Math.random() > 0.5 ? palette[0] : palette[1];
 
         if (pattern === 'rain') {
+          this.size = Math.random() * 1.0 + 1.0;
+          this.opacity = Math.random() * 0.3 + 0.45;
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
           this.speedX = (Math.random() - 0.5) * 0.3;
           this.speedY = Math.random() * 1.8 + 0.6;
         } else if (pattern === 'orbits') {
+          this.size = Math.random() * 1.2 + 0.9;
+          this.opacity = Math.random() * 0.3 + 0.4;
           const center =
             orbitCenters[Math.floor(Math.random() * orbitCenters.length)];
           this.center = center;
@@ -56,6 +58,8 @@ const MatrixRain = () => {
           this.x = center.x + Math.cos(this.angle) * this.radius;
           this.y = center.y + Math.sin(this.angle) * this.radius;
         } else if (pattern === 'waves') {
+          this.size = Math.random() * 1.4 + 1.1;
+          this.opacity = Math.random() * 0.3 + 0.45;
           this.x = Math.random() * canvas.width;
           this.baseY = Math.random() * canvas.height;
           this.y = this.baseY;
@@ -64,6 +68,8 @@ const MatrixRain = () => {
           this.frequency = 0.005 + Math.random() * 0.01;
           this.phase = Math.random() * Math.PI * 2;
         } else {
+          this.size = Math.random() * 0.6 + 0.3;
+          this.opacity = Math.random() * 0.3 + 0.1;
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * canvas.height;
           this.speedX = (Math.random() - 0.5) * 2.5;
