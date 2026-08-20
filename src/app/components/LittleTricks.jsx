@@ -53,6 +53,14 @@ const ICONS = {
       <circle cx="20" cy="15" r="1" />
     </svg>
   ),
+  game: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 12h4M8 10v4" />
+      <circle cx="16" cy="11" r="1" />
+      <circle cx="18" cy="13" r="1" />
+      <rect x="2" y="7" width="20" height="12" rx="4" />
+    </svg>
+  ),
   reroll: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4v5h5" />
@@ -114,6 +122,8 @@ export default function LittleTricks() {
     toggleCrt,
     terminalOn,
     toggleTerminal,
+    gameOn,
+    toggleGame,
     rerollBackground,
     fireConfetti,
   } = useTricks();
@@ -188,6 +198,15 @@ export default function LittleTricks() {
             description={t.tricks.confetti.description}
             onClick={(e) => fireConfetti(e.clientX, e.clientY)}
             isAction
+          />
+          <TrickCard
+            icon="game"
+            label={t.tricks.game.label}
+            description={t.tricks.game.description}
+            active={gameOn}
+            onClick={toggleGame}
+            onLabel={t.tricks.on}
+            offLabel={t.tricks.off}
           />
           <TrickCard
             icon="reroll"

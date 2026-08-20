@@ -11,6 +11,7 @@ export function TricksProvider({ children }) {
   const [magnetOn, setMagnetOn] = useState(false);
   const [crtOn, setCrtOn] = useState(false);
   const [terminalOn, setTerminalOn] = useState(false);
+  const [gameOn, setGameOn] = useState(false);
 
   const toggleGravity = () =>
     setGravityOn((v) => {
@@ -26,6 +27,7 @@ export function TricksProvider({ children }) {
   const toggleMagnet = () => setMagnetOn((v) => !v);
   const toggleCrt = () => setCrtOn((v) => !v);
   const toggleTerminal = () => setTerminalOn((v) => !v);
+  const toggleGame = () => setGameOn((v) => !v);
 
   const rerollBackground = () =>
     window.dispatchEvent(new Event('reroll-background'));
@@ -55,6 +57,8 @@ export function TricksProvider({ children }) {
         toggleCrt,
         terminalOn,
         toggleTerminal,
+        gameOn,
+        toggleGame,
         rerollBackground,
         fireConfetti,
       }}

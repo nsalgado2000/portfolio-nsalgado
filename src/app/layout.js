@@ -9,6 +9,7 @@ import MagnetEngine from './components/MagnetEngine'
 import CrtOverlay from './components/CrtOverlay'
 import TerminalMode from './components/TerminalMode'
 import ConfettiBurst from './components/ConfettiBurst'
+import CursorDodge from './components/CursorDodge'
 import { LanguageProvider } from './context/LanguageContext'
 import { TricksProvider } from './context/TricksContext'
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }) {
             <CrtOverlay />
             <TerminalMode />
             <ConfettiBurst />
+            <CursorDodge />
           </TricksProvider>
         </LanguageProvider>
       </body>
