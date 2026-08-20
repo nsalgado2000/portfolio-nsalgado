@@ -30,7 +30,11 @@ const MatrixRain = () => {
       ['#EBCB8B', '#D08770'],
       ['#BF616A', '#B48EAD'],
     ];
-    const PATTERNS = ['constellation', 'rain', 'orbits', 'waves'];
+    const PATTERNS = ['constellation', 'rain', 'orbits', 'waves', 'matrix'];
+    const MATRIX_FONT_SIZE = 16;
+    const MATRIX_CHARS =
+      'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+    let matrixColumns = [];
     let palette = PALETTES[0];
     let pattern = PATTERNS[0];
 
@@ -198,8 +202,27 @@ const MatrixRain = () => {
       }
     }
 
+    function initializeMatrixColumns() {
+      matrixColumns = [];
+      const cols = Math.floor(canvas.width / MATRIX_FONT_SIZE);
+      for (let i = 0; i < cols; i++) {
+        matrixColumns.push({
+          x: i * MATRIX_FONT_SIZE,
+          y: (Math.random() - 0.5) * canvas.height * 2,
+          speed: 0.6 + Math.random() * 2.5,
+          char: MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)],
+          changeIn: 3 + Math.floor(Math.random() * 12),
+        });
+      }
+    }
+
     function initializeParticles() {
       if (pattern === 'orbits') initializeOrbitCenters();
+      if (pattern === 'matrix') {
+        initializeMatrixColumns();
+        particles = [];
+        return;
+      }
       particles = [];
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle());
@@ -218,6 +241,29 @@ const MatrixRain = () => {
         ctx.beginPath();
         ctx.arc(c.x, c.y, 120, 0, Math.PI * 2);
         ctx.fill();
+      });
+    }
+
+    function drawMatrix() {
+      ctx.font = `bold ${MATRIX_FONT_SIZE}px monospace`;
+      ctx.textBaseline = 'top';
+      matrixColumns.forEach((col) => {
+        const drawY = Math.floor(col.y / MATRIX_FONT_SIZE) * MATRIX_FONT_SIZE;
+        ctx.fillStyle = hexToRgba(palette[0], 0.7);
+        ctx.fillText(col.char, col.x, drawY - MATRIX_FONT_SIZE);
+        ctx.fillStyle = hexToRgba('#ECEFF4', 0.92);
+        ctx.fillText(col.char, col.x, drawY);
+
+        col.y += col.speed;
+        col.changeIn -= 1;
+        if (col.changeIn <= 0) {
+          col.char = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+          col.changeIn = 3 + Math.floor(Math.random() * 12);
+        }
+        if (col.y > canvas.height + 20 && Math.random() > 0.975) {
+          col.y = -MATRIX_FONT_SIZE * (5 + Math.random() * 40);
+          col.speed = 0.6 + Math.random() * 2.5;
+        }
       });
     }
 
@@ -246,12 +292,18 @@ const MatrixRain = () => {
       rain: 0.16,
       orbits: 0.08,
       waves: 0.06,
+      matrix: 0.07,
     };
 
     function draw() {
       const fadeA = fadeAlphaByPattern[pattern] || 0.02;
       ctx.fillStyle = `rgba(46, 52, 64, ${fadeA})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (pattern === 'matrix') {
+        drawMatrix();
+        return;
+      }
 
       if (pattern === 'orbits') drawOrbitGlows();
 
