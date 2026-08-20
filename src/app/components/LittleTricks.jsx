@@ -66,7 +66,7 @@ export default function LittleTricks() {
   const { gravityOn, toggleGravity, mouseTrailOn, toggleMouseTrail, rerollBackground } = useTricks();
 
   return (
-    <section className="bg-[#3B4252] py-20">
+    <section className="py-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-3 text-[#ECEFF4]">
           {t.tricks.heading}
