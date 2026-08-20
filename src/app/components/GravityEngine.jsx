@@ -27,7 +27,7 @@ export default function GravityEngine() {
           origTop: rect.top,
           origBottom: rect.bottom,
           baseFloor: Math.max(window.innerHeight - rect.bottom + rect.height * 0.2, 24),
-          rot: (Math.random() - 0.5) * 60,
+          rot: 0,
         };
       });
 
