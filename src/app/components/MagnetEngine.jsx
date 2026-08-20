@@ -12,10 +12,36 @@ export default function MagnetEngine() {
   useEffect(() => {
     if (!magnetOn || gravityOn || zeroGOn) return;
 
-    const elements = Array.from(document.querySelectorAll('.js-gravity'));
-    if (elements.length === 0) return;
+    const nodes = Array.from(document.querySelectorAll('.js-gravity'));
+    if (nodes.length === 0) return;
 
-    elements.forEach((el) => {
+    const pagePos = (el) => {
+      let x = 0;
+      let y = 0;
+      let node = el;
+      while (node) {
+        x += node.offsetLeft || 0;
+        y += node.offsetTop || 0;
+        node = node.offsetParent;
+      }
+      return { x, y };
+    };
+
+    const measure = () =>
+      nodes.map((el) => {
+        const p = pagePos(el);
+        return {
+          el,
+          layoutX: p.x,
+          layoutY: p.y,
+          width: el.offsetWidth,
+          height: el.offsetHeight,
+        };
+      });
+
+    let bodies = measure();
+
+    nodes.forEach((el) => {
       el.style.transition = 'transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1)';
       el.style.willChange = 'transform';
     });
@@ -26,10 +52,9 @@ export default function MagnetEngine() {
 
     const update = () => {
       raf = null;
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
+      bodies.forEach(({ el, layoutX, layoutY, width, height }) => {
+        const cx = layoutX - window.scrollX + width / 2;
+        const cy = layoutY - window.scrollY + height / 2;
         const dx = mouseX - cx;
         const dy = mouseY - cy;
         const dist = Math.hypot(dx, dy);
@@ -42,18 +67,33 @@ export default function MagnetEngine() {
       });
     };
 
-    const onMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    const schedule = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
 
+    const onMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      schedule();
+    };
+
+    const onScroll = () => schedule();
+
+    const onResize = () => {
+      bodies = measure();
+      schedule();
+    };
+
     window.addEventListener('mousemove', onMove);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
 
     return () => {
       window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
       if (raf) cancelAnimationFrame(raf);
-      elements.forEach((el) => {
+      nodes.forEach((el) => {
         el.style.transition = 'transform 350ms cubic-bezier(0.2, 0.9, 0.3, 1)';
         el.style.transform = 'translate(0, 0)';
         const onDone = () => {
