@@ -31,7 +31,7 @@ export default function GravityEngine() {
           origRight: rect.right,
           origTop: rect.top,
           origBottom: rect.bottom,
-          baseFloor: Math.max(floorY - rect.bottom + rect.height * 0.2, 24),
+          baseFloor: Math.max(floorY - rect.bottom, 0),
           rot: 0,
         };
       });
