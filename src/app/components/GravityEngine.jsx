@@ -36,15 +36,11 @@ export default function GravityEngine() {
         };
       });
 
-      const overlapsX = (a, b) =>
-        a.origRight > b.origLeft + 2 && a.origLeft + 2 < b.origRight;
-
       const effectiveFloor = (body, prevY) => {
         let floor = body.baseFloor;
         for (const other of bodies) {
           if (other === body) continue;
           if (!other.settled) continue;
-          if (!overlapsX(body, other)) continue;
           const contact = other.origTop + other.y - body.origBottom;
           if (contact >= 0 && prevY <= contact && contact < floor) {
             floor = contact;
