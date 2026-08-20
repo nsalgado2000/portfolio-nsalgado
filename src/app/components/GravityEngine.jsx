@@ -14,6 +14,13 @@ export default function GravityEngine() {
     if (elements.length === 0) return;
 
     if (gravityOn) {
+      const floorRef =
+        document.querySelector('#contact .container') ||
+        document.querySelector('#contact');
+      const floorY = floorRef
+        ? floorRef.getBoundingClientRect().bottom
+        : window.innerHeight;
+
       const bodies = elements.map((el) => {
         const rect = el.getBoundingClientRect();
         el.style.transition = 'none';
@@ -26,7 +33,7 @@ export default function GravityEngine() {
           origRight: rect.right,
           origTop: rect.top,
           origBottom: rect.bottom,
-          baseFloor: Math.max(window.innerHeight - rect.bottom + rect.height * 0.2, 24),
+          baseFloor: Math.max(floorY - rect.bottom + rect.height * 0.2, 24),
           rot: 0,
         };
       });
