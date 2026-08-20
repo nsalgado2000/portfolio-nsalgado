@@ -14,24 +14,27 @@ export default function GravityEngine() {
     if (elements.length === 0) return;
 
     if (gravityOn) {
+      const scrollY = window.scrollY;
       const floorRef = document.querySelector('#contact');
       const floorY = floorRef
-        ? floorRef.getBoundingClientRect().bottom
-        : window.innerHeight;
+        ? floorRef.getBoundingClientRect().bottom + scrollY
+        : window.innerHeight + scrollY;
 
       const bodies = elements.map((el) => {
         const rect = el.getBoundingClientRect();
         el.style.transition = 'none';
         el.style.willChange = 'transform';
+        const pageTop = rect.top + scrollY;
+        const pageBottom = rect.bottom + scrollY;
         return {
           el,
           y: 0,
           v: 0,
           origLeft: rect.left,
           origRight: rect.right,
-          origTop: rect.top,
-          origBottom: rect.bottom,
-          baseFloor: Math.max(floorY - rect.bottom, 0),
+          origTop: pageTop,
+          origBottom: pageBottom,
+          baseFloor: Math.max(floorY - pageBottom, 0),
           rot: 0,
         };
       });
