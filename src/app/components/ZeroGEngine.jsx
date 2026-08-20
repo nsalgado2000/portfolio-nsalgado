@@ -24,8 +24,10 @@ export default function ZeroGEngine() {
         return top;
       };
 
-      const ceilingRef = document.querySelector('#projects');
-      const ceilingY = ceilingRef ? pageTop(ceilingRef) : 0;
+      const ceilingRef = document.querySelector('main > section:first-of-type');
+      const ceilingY = ceilingRef
+        ? pageTop(ceilingRef) + ceilingRef.offsetHeight
+        : 0;
 
       const bodies = elements.map((el) => {
         el.style.transition = 'none';
