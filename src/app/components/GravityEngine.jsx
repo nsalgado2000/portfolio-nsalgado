@@ -14,27 +14,36 @@ export default function GravityEngine() {
     if (elements.length === 0) return;
 
     if (gravityOn) {
-      const scrollY = window.scrollY;
+      const pageTop = (el) => {
+        let top = 0;
+        let node = el;
+        while (node) {
+          top += node.offsetTop || 0;
+          node = node.offsetParent;
+        }
+        return top;
+      };
+
       const floorRef = document.querySelector('#contact');
       const floorY = floorRef
-        ? floorRef.getBoundingClientRect().bottom + scrollY
-        : window.innerHeight + scrollY;
+        ? pageTop(floorRef) + floorRef.offsetHeight
+        : document.documentElement.scrollHeight;
 
       const bodies = elements.map((el) => {
-        const rect = el.getBoundingClientRect();
         el.style.transition = 'none';
         el.style.willChange = 'transform';
-        const pageTop = rect.top + scrollY;
-        const pageBottom = rect.bottom + scrollY;
+        const top = pageTop(el);
+        const bottom = top + el.offsetHeight;
+        const rect = el.getBoundingClientRect();
         return {
           el,
           y: 0,
           v: 0,
           origLeft: rect.left,
           origRight: rect.right,
-          origTop: pageTop,
-          origBottom: pageBottom,
-          baseFloor: Math.max(floorY - pageBottom, 0),
+          origTop: top,
+          origBottom: bottom,
+          baseFloor: Math.max(floorY - bottom, 0),
           rot: 0,
         };
       });
