@@ -36,18 +36,24 @@ export default function GravityEngine() {
         };
       });
 
-      const effectiveFloor = (body, prevY) => {
-        let floor = body.baseFloor;
-        for (const other of bodies) {
-          if (other === body) continue;
-          if (!other.settled) continue;
-          const contact = other.origTop + other.y - body.origBottom;
-          if (contact >= 0 && prevY <= contact && contact < floor) {
-            floor = contact;
+      const placeOrder = [...bodies].sort(
+        (a, b) => a.baseFloor - b.baseFloor
+      );
+
+      for (const body of placeOrder) {
+        let target = body.baseFloor;
+        for (const other of placeOrder) {
+          if (other === body) break;
+          const originallySideBySide =
+            other.origBottom > body.origTop && other.origTop < body.origBottom;
+          if (originallySideBySide) continue;
+          const contact = other.origTop + other.targetY - body.origBottom;
+          if (contact > 0 && contact < target) {
+            target = contact;
           }
         }
-        return floor;
-      };
+        body.targetY = target;
+      }
 
       let last = performance.now();
 
@@ -59,14 +65,11 @@ export default function GravityEngine() {
         bodies.forEach((b) => {
           if (b.settled) return;
           stillMoving = true;
-          const prevY = b.y;
           b.v += GRAVITY * dt;
           b.y += b.v * dt;
 
-          const floor = effectiveFloor(b, prevY);
-
-          if (b.y >= floor) {
-            b.y = floor;
+          if (b.y >= b.targetY) {
+            b.y = b.targetY;
             b.v = 0;
             b.settled = true;
           }
