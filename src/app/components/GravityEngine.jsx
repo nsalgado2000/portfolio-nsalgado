@@ -32,7 +32,7 @@ export default function GravityEngine() {
           origTop: rect.top,
           origBottom: rect.bottom,
           baseFloor: Math.max(floorY - rect.bottom, 0),
-          rot: 0,
+          rot: (Math.random() - 0.5) * 18,
         };
       });
 
