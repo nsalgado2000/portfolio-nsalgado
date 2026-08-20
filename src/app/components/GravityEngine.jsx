@@ -17,7 +17,6 @@ export default function GravityEngine() {
       const bodies = elements.map((el) => {
         const rect = el.getBoundingClientRect();
         el.style.transition = 'none';
-        el.style.pointerEvents = 'none';
         el.style.willChange = 'transform';
         return {
           el,
@@ -89,7 +88,6 @@ export default function GravityEngine() {
         const onDone = () => {
           el.style.transition = '';
           el.style.willChange = '';
-          el.style.pointerEvents = '';
           el.removeEventListener('transitionend', onDone);
         };
         el.addEventListener('transitionend', onDone);
